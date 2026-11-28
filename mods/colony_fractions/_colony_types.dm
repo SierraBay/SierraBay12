@@ -1,4 +1,4 @@
 /singleton/modpack/colony_types
 	name = "Типы колоний"
 	desc = "Этот мод добавляет типы колоний, углубляющий и развивающий геймплей на колонии и взаимодействие оной с другими сторонами событий."
-	author = "Shegar"
+	author = "Shegar (Код), Garry Flint (Frontier Alliance: Blockade Runners)"

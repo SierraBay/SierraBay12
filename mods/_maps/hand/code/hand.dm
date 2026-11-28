@@ -7,7 +7,7 @@
 	desc = "Hyena-class salvage vessel used by countless independent prospectors and corporates alike"
 	color = "#40e200"
 	fore_dir = NORTH
-	vessel_mass = 3000
+	vessel_mass = 12000
 	known_ships = list(
 		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
 		/obj/overmap/visitable/ship/landable/graysontug/hand_two,

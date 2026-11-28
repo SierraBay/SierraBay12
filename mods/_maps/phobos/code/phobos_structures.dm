@@ -41,6 +41,14 @@
 		"exped" = COLOR_WARM_YELLOW
 	)
 
+/singleton/closet_appearance/secure_closet/phobos/medical
+	color = COLOR_OFF_WHITE
+	decals = null
+	extra_decals = list(
+		"circle" = COLOR_BLUE_GRAY,
+		"stripes_horizontal" = COLOR_BLUE_GRAY
+	)
+
 /obj/structure/closet/secure_closet/guncabinet/phobos
 	name = "heavy armory cabinet"
 	req_access = list(access_away_phobos_armory)
@@ -69,6 +77,11 @@
 	name = "engineer's locker"
 	req_access = list(access_away_phobos)
 	closet_appearance = /singleton/closet_appearance/secure_closet/phobos/engineering
+
+/obj/structure/closet/secure_closet/medical_phobos
+	name = "medical staff locker"
+	req_access = list(access_away_phobos)
+	closet_appearance = /singleton/closet_appearance/secure_closet/phobos/medical
 
 
 		// Missile console //
@@ -128,3 +141,16 @@
 					/obj/item/clothing/accessory/storage/black_drop = 15,
 					/obj/item/clothing/accessory/solgov/fleet_patch/third = 15,
 					)
+
+//
+
+/obj/machinery/power/smes/buildable/preset/phobos
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/smes_coil/super_capacity = 1,
+		/obj/item/stock_parts/smes_coil = 1
+	)
+	_input_maxed = TRUE
+	_output_maxed = TRUE
+	_input_on = TRUE
+	_output_on = TRUE
+	_fully_charged = TRUE

@@ -8,7 +8,7 @@
 	desc = "ICGNV Garibaldi-class Gunboat. This craft bears markings of Pioneer Corps"
 	color = "#fc7a00"
 	fore_dir = WEST
-	vessel_mass = 22470
+	vessel_mass = 20000
 	known_ships = list(/obj/overmap/visitable/ship/landable/snz)
 	vessel_size = SHIP_SIZE_SMALL
 	hide_from_reports = TRUE

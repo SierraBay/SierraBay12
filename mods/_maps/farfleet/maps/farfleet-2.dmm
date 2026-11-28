@@ -1567,22 +1567,6 @@
 	},
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
-"jt" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/catwalk_plated/dark,
-/turf/simulated/floor/plating,
-/area/ship/farfleet/command/snz_hangar)
 "ju" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4206,10 +4190,6 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
 "xr" = (
-/obj/structure/cable/green{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/ion_engine{
 	dir = 8;
 	density = 1;
@@ -5736,12 +5716,8 @@
 "Ff" = (
 /obj/machinery/ion_engine{
 	dir = 8;
-	opacity = 1;
-	density = 1
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	density = 1;
+	opacity = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -6418,20 +6394,6 @@
 	},
 /turf/simulated/floor/tiled/old_tile,
 /area/ship/farfleet/maintenance/anomaly)
-"JW" = (
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/paint/red,
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/wall/r_titanium,
-/area/ship/snz)
 "Kg" = (
 /obj/machinery/space_heater/stationary{
 	pixel_x = 0;
@@ -7083,20 +7045,6 @@
 /obj/paint/silver,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/barracks)
-"NN" = (
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/paint/red,
-/obj/structure/cable/green{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/wall/r_titanium,
-/area/ship/snz)
 "NO" = (
 /obj/structure/bed/chair/comfy/red{
 	dir = 4
@@ -7497,17 +7445,6 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
-"Qk" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/paint/dark_gunmetal,
-/obj/paint/red,
-/turf/simulated/wall/r_wall,
-/area/ship/farfleet/command/snz_hangar)
 "Ql" = (
 /obj/paint/dark_gunmetal,
 /obj/structure/cable{
@@ -19566,14 +19503,14 @@ Jn
 mR
 uy
 tC
-NN
+Sx
 sx
 Sx
 Sx
 TB
 Sx
 sx
-JW
+Sx
 IF
 WJ
 ES
@@ -19932,14 +19869,14 @@ an
 Es
 Bh
 Ha
-Ha
-yA
-Bh
-Bh
-Bh
 Bh
 yA
-jt
+Bh
+Bh
+Bh
+Bh
+yA
+Bh
 AP
 Bh
 vp
@@ -20054,14 +19991,14 @@ an
 an
 an
 ty
-ty
 an
 an
 an
 an
 an
 an
-ty
+an
+an
 ty
 an
 an
@@ -20176,14 +20113,14 @@ an
 gF
 gF
 yd
-Qk
 bH
 bH
 bH
 bH
 bH
 bH
-Qk
+bH
+bH
 yd
 gF
 gF
@@ -20299,12 +20236,12 @@ gF
 ab
 wb
 Ff
+Ff
 aa
 aa
 aa
 aa
-aa
-aa
+Ff
 Ff
 wb
 ab

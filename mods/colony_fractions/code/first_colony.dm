@@ -448,8 +448,10 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 
 
 /obj/machinery/power/smes/buildable/preset/colony
-	uncreated_component_parts = list(/obj/item/stock_parts/smes_coil/super_capacity = 1,
-									/obj/item/stock_parts/smes_coil/super_io = 1)
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/smes_coil/super_capacity = 1,
+		/obj/item/stock_parts/smes_coil = 1
+	)
 	_input_maxed = TRUE
 	_output_maxed = TRUE
 	_input_on = TRUE

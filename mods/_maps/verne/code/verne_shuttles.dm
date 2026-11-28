@@ -16,13 +16,16 @@
 	vessel_size = SHIP_SIZE_SMALL
 	max_speed = 1/(2 SECONDS) //same stats as charon
 	burn_delay = 1 SECONDS
-	vessel_mass = 5000
+	vessel_mass = 3000
 	skill_needed = SKILL_BASIC
 
+/*
+// duplicate /mods/overmap/code/contacts/special_contact_class.dm
 /decl/ship_contact_class/srv_shuttle
 	class_short = "SRV"
 	class_long = "Research Shuttle"
 	max_ship_mass = 6000
+*/
 
 /datum/shuttle/autodock/overmap/verne
 	name = "SRV Venerable Catfish"

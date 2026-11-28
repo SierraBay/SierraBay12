@@ -35,9 +35,8 @@
 		<i>Transponder</i>: Transmitting (SCI), SCGRV<br>
 		<b>Notice</b>: Sensor array detects a medium-sized research vessel. It is owned by Ceti Institute of Technology and registered as Sol Central Government ship."}
 	contact_class = /decl/ship_contact_class/srv
-	vessel_mass = 10000
+	vessel_mass = 13000
 	known_ships = list(/obj/overmap/visitable/ship/landable/verne)
-	max_speed = 1/(3 SECONDS)
 	burn_delay = 2 SECONDS
 	fore_dir = NORTH
 	initial_restricted_waypoints = list(
@@ -50,10 +49,13 @@
 		"nav_verne_3",
 	)
 
+/*
+// duplicate /mods/overmap/code/contacts/special_contact_class.dm
 /decl/ship_contact_class/srv
 	class_short = "SRV"
 	class_long = "Sol Research Vessel"
 	max_ship_mass = 12000
+*/
 
 /datum/map_template/ruin/away_site/verne
 	name = "Active University Ship (CTI Verne)"
@@ -229,8 +231,8 @@ var/global/const/access_verne = "ACCESS_VERNE"
 
 /obj/machinery/power/smes/buildable/preset/verne/shuttle
 	uncreated_component_parts = list(
-		/obj/item/stock_parts/smes_coil/super_io = 1,
 		/obj/item/stock_parts/smes_coil/super_capacity = 1,
+		/obj/item/stock_parts/smes_coil = 2
 	)
 	_input_maxed = TRUE
 	_output_maxed = TRUE

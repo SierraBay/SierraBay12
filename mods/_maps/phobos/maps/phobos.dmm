@@ -128,11 +128,11 @@
 /turf/simulated/wall/prepainted,
 /area/ship/phobos/bridge/co_office)
 "aA" = (
-/obj/machinery/power/smes/buildable/preset/on_full,
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/power/smes/buildable/preset/phobos,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/engine/atmos)
 "aB" = (
@@ -429,7 +429,6 @@
 	},
 /area/ship/phobos/disperser/storage)
 "bw" = (
-/obj/machinery/power/smes/buildable/preset/on_full,
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
@@ -439,6 +438,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/power/smes/buildable/preset/phobos,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/engine/atmos)
 "bx" = (
@@ -720,7 +720,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "bY" = (
-/obj/floor_decal/industrial/shutoff,
+/obj/floor_decal/corner/red{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "bZ" = (
@@ -733,12 +735,13 @@
 	name = "south bump";
 	pixel_y = -24
 	},
-/obj/floor_decal/industrial/shutoff,
+/obj/floor_decal/corner/red{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "ca" = (
 /obj/machinery/door/airlock/highsecurity{
-	autoset_access = 0;
 	icon_state = "closed";
 	name = "Bridge Armory"
 	},
@@ -858,6 +861,11 @@
 "cm" = (
 /obj/floor_decal/spline/fancy/wood{
 	dir = 4
+	},
+/obj/structure/table/woodentable/ebony,
+/obj/item/book/manual/solgov_law{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet,
 /area/ship/phobos/living/bunk)
@@ -1145,12 +1153,12 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
 "de" = (
+/obj/paint/red,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/paint/red,
 /turf/simulated/wall/r_wall/hull,
 /area/ship/phobos/engine/thrusterport)
 "df" = (
@@ -1383,10 +1391,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
 /obj/floor_decal/corner/red/diagonal,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/disperser)
 "dD" = (
@@ -1476,18 +1484,18 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "dQ" = (
+/obj/paint/red,
+/obj/structure/sign/warning/hot_exhaust{
+	dir = 4;
+	icon_state = "fire"
+	},
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/sign/warning/hot_exhaust{
-	dir = 4;
-	icon_state = "fire"
-	},
-/obj/paint/red,
 /turf/simulated/wall/r_wall/hull,
-/area/ship/phobos/engine/thrusterstarboard)
+/area/ship/phobos/engine/thrusterport)
 "dU" = (
 /obj/floor_decal/industrial/danger{
 	dir = 10
@@ -1505,6 +1513,15 @@
 	map_airless = 1
 	},
 /area/ship/interseptor)
+"dY" = (
+/obj/structure/disposalpipe/segment,
+/obj/floor_decal/corner/red{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/tiled/techfloor,
+/area/ship/phobos/security/lobby)
 "eb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -1932,7 +1949,6 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/maint/port)
 "fQ" = (
-/obj/machinery/power/smes/buildable/preset/on_full,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -1942,6 +1958,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/smes/buildable/preset/phobos,
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/phobos/engine/atmos)
 "fR" = (
@@ -2736,9 +2753,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
@@ -2884,6 +2898,12 @@
 	name = "Obstruction Field Disperser Magazine";
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser/storage)
 "kg" = (
@@ -2908,6 +2928,16 @@
 	},
 /turf/simulated/wall/prepainted,
 /area/ship/phobos/living/bunk)
+"ks" = (
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/ship/phobos/disperser/storage)
 "kv" = (
 /turf/simulated/wall/prepainted,
 /area/ship/phobos/security/detective)
@@ -2958,13 +2988,13 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/meter,
 /obj/structure/catwalk,
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "kD" = (
@@ -3136,9 +3166,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/engine/atmos)
 "lp" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 1
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterport)
@@ -3452,9 +3484,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/closet/secure_closet/medical3{
-	req_access = list("ACCESS_PHOBOS")
-	},
 /obj/floor_decal/corner/paleblue{
 	dir = 10
 	},
@@ -3463,6 +3492,7 @@
 	},
 /obj/item/device/radio/map_preset/phobos,
 /obj/item/device/scanner/health,
+/obj/structure/closet/secure_closet/medical_phobos,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
 "mo" = (
@@ -3590,6 +3620,11 @@
 	dir = 8
 	},
 /obj/structure/catwalk,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "mH" = (
@@ -3631,9 +3666,9 @@
 "mK" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/structure/cable/green{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
@@ -3779,6 +3814,16 @@
 "nl" = (
 /turf/simulated/wall/r_wall/hull,
 /area/ship/phobos/ven)
+"no" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/ship/phobos/disperser/storage)
 "nr" = (
 /obj/machinery/door/airlock/engineering{
 	icon_state = "closed";
@@ -4189,6 +4234,10 @@
 	icon_state = "2-4"
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/ven)
 "oY" = (
@@ -4723,6 +4772,14 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
+"rd" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall/hull,
+/area/ship/phobos/engine/thrusterport)
 "rh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /obj/structure/cable/green{
@@ -4975,7 +5032,6 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/security)
 "si" = (
-/obj/structure/catwalk,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
@@ -4991,6 +5047,13 @@
 	pixel_x = 24;
 	req_access = list("ACCESS_PHOBOS")
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/maint/starboard/bridge)
 "sj" = (
@@ -5153,9 +5216,13 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/corner/red/diagonal,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/disperser)
 "sN" = (
@@ -5370,7 +5437,6 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 1
 	},
-/obj/structure/catwalk,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -5379,12 +5445,13 @@
 /obj/item/device/radio/intercom/map_preset/phobos{
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "tU" = (
@@ -5540,9 +5607,6 @@
 	dir = 8
 	},
 /obj/floor_decal/corner/paleblue/diagonal,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/gas_setup,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
@@ -5572,11 +5636,8 @@
 /turf/simulated/floor/steel_dirty,
 /area/ship/phobos/engine)
 "uH" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
@@ -5715,16 +5776,14 @@
 /turf/simulated/floor,
 /area/ship/phobos/disperser)
 "vp" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
-/obj/floor_decal/industrial/outline/grey,
-/obj/structure/missile/impact,
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/ship/phobos/disperser/storage)
 "vs" = (
 /obj/structure/closet/fridge,
@@ -5742,8 +5801,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
 /turf/simulated/floor/steel_dirty,
@@ -5763,13 +5824,7 @@
 	pixel_x = 0;
 	pixel_y = 26
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "vF" = (
@@ -6486,6 +6541,9 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor/steel_dirty,
 /area/ship/phobos/engine)
 "ym" = (
@@ -6578,6 +6636,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/phobos/living)
 "yI" = (
@@ -6786,11 +6845,13 @@
 	name = "west bump";
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor/steel_dirty,
 /area/ship/phobos/engine)
 "zv" = (
@@ -6866,8 +6927,14 @@
 /area/ship/phobos/disperser)
 "zO" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/fuel,
-/obj/structure/catwalk,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "zP" = (
@@ -6993,7 +7060,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/phobos/engine)
 "AA" = (
-/obj/machinery/seed_storage/garden,
+/obj/machinery/seed_storage/garden{
+	dir = 8
+	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26
@@ -7043,10 +7112,6 @@
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
-	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	icon_state = "map_vent_out";
-	dir = 1
 	},
 /obj/machinery/light,
 /obj/floor_decal/industrial/warning,
@@ -7203,6 +7268,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
@@ -7325,6 +7396,11 @@
 	dir = 5
 	},
 /obj/structure/catwalk,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "BP" = (
@@ -7339,6 +7415,9 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
@@ -7360,6 +7439,7 @@
 	pixel_y = 24;
 	req_access = list("ACCESS_PHOBOS")
 	},
+/obj/structure/bed/chair/armchair/black,
 /turf/simulated/floor/carpet,
 /area/ship/phobos/living/bunk)
 "BW" = (
@@ -7899,12 +7979,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/ven)
 "EE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 8
-	},
 /obj/structure/closet/crate,
 /obj/item/missile_equipment/payload/emp,
 /obj/item/missile_equipment/payload/emp,
@@ -7912,6 +7986,9 @@
 /obj/item/missile_equipment/payload/explosive,
 /obj/item/missile_equipment/payload/diffuser,
 /obj/item/missile_equipment/payload/diffuser,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "EK" = (
@@ -8159,6 +8236,12 @@
 "FT" = (
 /obj/structure/catwalk,
 /obj/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/maint/starboard/bridge)
 "FU" = (
@@ -8287,10 +8370,10 @@
 /turf/simulated/wall/prepainted,
 /area/ship/phobos/living/mess)
 "GP" = (
-/obj/floor_decal/industrial/loading,
 /obj/floor_decal/corner/red{
 	dir = 10
 	},
+/obj/floor_decal/industrial/loading,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "GR" = (
@@ -8403,6 +8486,14 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/phobos/engine)
+"Hr" = (
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall/hull,
+/area/ship/phobos/engine/thrusterstarboard)
 "Hs" = (
 /obj/machinery/door/firedoor,
 /obj/floor_decal/industrial/hatch/yellow,
@@ -8427,6 +8518,15 @@
 	map_airless = 1
 	},
 /area/ship/phobos/disperser)
+"Hx" = (
+/obj/paint/red,
+/obj/machinery/ion_engine{
+	dir = 8;
+	density = 1;
+	opacity = 1
+	},
+/turf/simulated/wall/r_wall/hull,
+/area/ship/phobos/engine/thrusterstarboard)
 "Hy" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -8478,9 +8578,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 9;
@@ -8664,9 +8761,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -8675,6 +8769,9 @@
 	id_tag = "phobos_md_58_bd_md";
 	name = "Co-axial Missile Launcher Load";
 	pixel_y = -25
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/disperser)
@@ -8737,12 +8834,6 @@
 /obj/machinery/alarm{
 	pixel_y = 24;
 	req_access = list("ACCESS_PHOBOS")
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterport)
@@ -8971,6 +9062,12 @@
 	pixel_y = -22;
 	req_access = list("ACCESS_PHOBOS")
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser/storage)
 "JS" = (
@@ -8991,6 +9088,7 @@
 /obj/structure/missile/cargo/planet{
 	dir = 2
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser)
 "JX" = (
@@ -9262,6 +9360,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "KT" = (
@@ -9413,6 +9512,9 @@
 "LA" = (
 /obj/floor_decal/spline/fancy/wood{
 	dir = 6
+	},
+/obj/structure/bed/chair/armchair/black{
+	dir = 1
 	},
 /turf/simulated/floor/carpet,
 /area/ship/phobos/living/bunk)
@@ -9743,8 +9845,7 @@
 "MK" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Lieutenant";
-	dir = 4;
-	req_access = list("ACCESS_PHOBOS_ARMORY")
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
@@ -9804,6 +9905,12 @@
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -9945,13 +10052,12 @@
 /area/ship/phobos/disperser)
 "Nz" = (
 /obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/paint/red,
 /turf/simulated/wall/r_wall/hull,
-/area/ship/phobos/engine/thrusterstarboard)
+/area/ship/phobos/engine/thrusterport)
 "NB" = (
 /obj/item/stack/material/uranium/ten,
 /obj/machinery/light/small{
@@ -10104,7 +10210,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
@@ -10133,6 +10239,8 @@
 	dir = 4;
 	pixel_x = 21
 	},
+/obj/machinery/atmospherics/valve/shutoff/supply,
+/obj/machinery/atmospherics/valve/shutoff/scrubbers,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser)
@@ -10168,6 +10276,11 @@
 "OI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 6
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
@@ -10435,6 +10548,19 @@
 /obj/paint/black,
 /turf/simulated/floor,
 /area/ship/interseptor)
+"PY" = (
+/obj/paint/red,
+/obj/structure/sign/warning/hot_exhaust{
+	dir = 4;
+	icon_state = "fire"
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/r_wall/hull,
+/area/ship/phobos/engine/thrusterstarboard)
 "Qc" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
@@ -10555,6 +10681,8 @@
 	name = "Telecommunications"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/phobos/ven)
 "QE" = (
@@ -10636,7 +10764,9 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/ship/phobos/engine/thrusterstarboard)
 "QX" = (
-/obj/machinery/vending/hydronutrients/generic,
+/obj/machinery/vending/hydronutrients/generic{
+	dir = 8
+	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24;
@@ -10707,12 +10837,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/disperser)
 "Rq" = (
@@ -10739,13 +10865,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/living/mess)
 "RA" = (
-/obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light_switch{
 	dir = 8;
 	pixel_x = 22;
 	pixel_y = 6
 	},
+/obj/machinery/atmospherics/valve/shutoff/supply,
+/obj/machinery/atmospherics/valve/shutoff/scrubbers,
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser)
 "RB" = (
@@ -10788,6 +10915,14 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
+"RD" = (
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/r_wall/hull,
+/area/ship/phobos/engine/thrusterstarboard)
 "RF" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -10829,12 +10964,11 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/corner/red/diagonal,
 /obj/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/disperser)
 "RU" = (
@@ -10849,9 +10983,9 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser)
 "RV" = (
-/obj/machinery/power/smes/buildable/preset/on_full,
 /obj/structure/cable/green,
 /obj/machinery/light/small,
+/obj/machinery/power/smes/buildable/preset/phobos,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/maint/port)
 "RX" = (
@@ -10982,9 +11116,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/closet/secure_closet/medical3{
-	req_access = list("ACCESS_PHOBOS")
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -10996,6 +11127,7 @@
 	},
 /obj/item/device/radio/map_preset/phobos,
 /obj/item/device/scanner/health,
+/obj/structure/closet/secure_closet/medical_phobos,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/medbay)
 "St" = (
@@ -11371,13 +11503,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/hallway/eva)
 "Ud" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser/storage)
 "Ue" = (
@@ -11437,6 +11567,11 @@
 "UJ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/fuel,
 /obj/machinery/meter,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
 "UL" = (
@@ -11638,7 +11773,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/security/lobby)
 "Vq" = (
-/obj/structure/catwalk,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
@@ -11649,6 +11783,7 @@
 	icon_state = "bulb1"
 	},
 /obj/random/trash,
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/maint/starboard/bridge)
 "Vs" = (
@@ -11936,12 +12071,12 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser/storage)
 "Wt" = (
-/obj/structure/catwalk,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/maint/starboard/bridge)
 "Wu" = (
@@ -12353,6 +12488,15 @@
 /obj/item/device/radio/map_preset/phobos,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/phobos/security/equipment)
+"Yc" = (
+/obj/paint/red,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/r_wall/hull,
+/area/ship/phobos/engine/thrusterstarboard)
 "Yd" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -12578,12 +12722,17 @@
 /turf/simulated/floor,
 /area/ship/phobos/hallway/eva)
 "YH" = (
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/table/rack,
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/clamp,
+/obj/item/clamp,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 7;
+	pixel_y = -3
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/phobos/engine)
 "YL" = (
@@ -12670,16 +12819,12 @@
 	},
 /area/ship/interseptor)
 "Zg" = (
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/sign/warning/hot_exhaust{
-	dir = 4;
-	icon_state = "fire"
-	},
 /obj/paint/red,
+/obj/machinery/ion_engine{
+	dir = 8;
+	density = 1;
+	opacity = 1
+	},
 /turf/simulated/wall/r_wall/hull,
 /area/ship/phobos/engine/thrusterport)
 "Zi" = (
@@ -12792,6 +12937,9 @@
 	icon_state = "4-8"
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/ven)
 "Zz" = (
@@ -19165,7 +19313,7 @@ aa
 aa
 OR
 Rh
-bT
+vp
 Ud
 qB
 PQ
@@ -19317,7 +19465,7 @@ aa
 OR
 OR
 SR
-bT
+ks
 uH
 VI
 bU
@@ -19469,7 +19617,7 @@ bP
 OR
 OR
 SR
-bT
+no
 EE
 VI
 VI
@@ -19621,8 +19769,8 @@ aa
 OR
 OR
 qi
-bT
-vp
+ks
+bV
 bV
 qO
 bb
@@ -19773,7 +19921,7 @@ aa
 OR
 OR
 tD
-bT
+ks
 kB
 kB
 kB
@@ -20077,7 +20225,7 @@ aa
 OR
 OR
 RC
-bT
+ks
 bb
 bG
 gS
@@ -20229,7 +20377,7 @@ bP
 OR
 OR
 Vw
-bT
+ks
 bb
 PU
 bK
@@ -20381,7 +20529,7 @@ hE
 OR
 OR
 lc
-bT
+ks
 bb
 DV
 br
@@ -21449,7 +21597,7 @@ qC
 OS
 Pg
 YL
-YL
+dY
 YL
 Pg
 Ff
@@ -27822,9 +27970,9 @@ aa
 aa
 aa
 aa
-aa
 bP
-Eu
+RD
+Hr
 OI
 UJ
 mK
@@ -27852,9 +28000,9 @@ dL
 kC
 mG
 BO
-FD
+rd
+Nz
 bP
-aa
 aa
 aa
 aa
@@ -27974,12 +28122,12 @@ aa
 aa
 aa
 aa
-aa
 bP
+Yc
+Hx
+sG
+sG
 bo
-sG
-sG
-Nz
 Fw
 nb
 Rf
@@ -28001,12 +28149,12 @@ cw
 dK
 yI
 UV
-de
-tH
-tH
 Ep
+tH
+tH
+Zg
+de
 bP
-aa
 aa
 aa
 aa
@@ -28127,13 +28275,13 @@ aa
 aa
 aa
 bP
-bP
-bP
+PY
 aa
 aa
-dQ
+aa
+Hx
 sG
-bo
+Hx
 bo
 Eu
 UH
@@ -28151,13 +28299,13 @@ UH
 UH
 UH
 Ep
-Ep
+Zg
 tH
 Zg
 aa
 aa
 aa
-bP
+dQ
 bP
 aa
 aa
@@ -28278,12 +28426,12 @@ aa
 aa
 aa
 aa
-aa
 bP
+yb
 aa
 aa
 aa
-jl
+aa
 aa
 aa
 bF
@@ -28305,12 +28453,12 @@ aa
 bF
 aa
 aa
-jl
 aa
 aa
 aa
+aa
+yb
 bP
-aa
 aa
 aa
 aa
@@ -28431,7 +28579,7 @@ aa
 aa
 aa
 aa
-bP
+jl
 aa
 aa
 aa
@@ -28461,7 +28609,7 @@ aa
 aa
 aa
 aa
-bP
+jl
 aa
 aa
 aa

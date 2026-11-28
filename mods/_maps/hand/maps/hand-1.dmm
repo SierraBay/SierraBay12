@@ -3318,6 +3318,14 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/maintenance/atmos)
+"pp" = (
+/obj/structure/foamedmetal,
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/ship/hand/maintenance/engine/starboard)
 "pr" = (
 /obj/machinery/door/airlock/external/bolted/cycling{
 	frequency = 1380;
@@ -4653,11 +4661,11 @@
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_one)
 "vo" = (
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/smes/buildable/preset/hand,
 /turf/simulated/floor/plating,
 /area/ship/hand/engineering/port)
 "vp" = (
@@ -4939,9 +4947,6 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/engineering/port)
 "xi" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 10
-	},
 /obj/structure/foamedmetal,
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -5085,6 +5090,12 @@
 "xU" = (
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/cargo/emergency_armory)
+"xY" = (
+/obj/machinery/ion_engine{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/ship/hand/maintenance/engine/starboard)
 "yc" = (
 /obj/structure/table/woodentable/walnut,
 /obj/structure/filingcabinet/wallcabinet{
@@ -6247,8 +6258,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/maintenance/atmos)
 "DV" = (
-/obj/machinery/power/smes/buildable/preset/on_full,
 /obj/structure/cable,
+/obj/machinery/power/smes/buildable/preset/hand,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/maintenance/engine)
 "Ea" = (
@@ -6301,6 +6312,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/lower)
+"Ep" = (
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/ship/hand/maintenance/engine/port)
 "Eq" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -6748,6 +6763,12 @@
 	},
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower/aft)
+"Gw" = (
+/obj/machinery/ion_engine{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/ship/hand/maintenance/engine/port)
 "Gx" = (
 /obj/floor_decal/corner/yellow/diagonal,
 /obj/decal/cleanable/dirt,
@@ -10283,7 +10304,6 @@
 	},
 /area/ship/hand/maintenance/solarstarboard)
 "Zu" = (
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10291,6 +10311,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/power/smes/buildable/preset/hand,
 /turf/simulated/floor/plating,
 /area/ship/hand/engineering/starboard)
 "Zv" = (
@@ -16258,9 +16279,9 @@ VZ
 gj
 iY
 PC
-UY
-Xs
-aH
+Ep
+Iv
+Gw
 aa
 aa
 aa
@@ -16380,7 +16401,7 @@ VZ
 oy
 iY
 PC
-vu
+UY
 Xs
 aH
 aa
@@ -19064,7 +19085,7 @@ Wv
 rK
 pW
 uM
-Fq
+pp
 uG
 DC
 aa
@@ -19187,8 +19208,8 @@ WP
 pW
 uM
 xi
-uG
-DC
+dz
+xY
 aa
 aa
 aa

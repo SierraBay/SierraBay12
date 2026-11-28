@@ -164,11 +164,10 @@
 	shuttle = "EE S-class 18-24-1"
 	name = "EE S-class 18-24-1"
 	desc = "Einstein Engines S-class pod. Universal takeoff and landing module."
-	max_speed = 1/(2 SECONDS)
 	burn_delay = 1 SECONDS
 	fore_dir = NORTH
 	color = "#e6f7ff"
-	vessel_mass = 500
+	vessel_mass = 400
 	vessel_size = SHIP_SIZE_TINY
 	known_ships = list(
 		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
@@ -181,11 +180,10 @@
 	shuttle = "EE S-class 18-24-2"
 	name = "EE S-class 18-24-2"
 	desc = "Einstein Engines S-class pod. Universal takeoff and landing module."
-	max_speed = 1/(2 SECONDS)
 	burn_delay = 1 SECONDS
 	fore_dir = NORTH
 	color = "#e6f7ff"
-	vessel_mass = 500
+	vessel_mass = 400
 	vessel_size = SHIP_SIZE_TINY
 	known_ships = list(
 		/obj/overmap/visitable/ship/landable/graysontug/hand_one,

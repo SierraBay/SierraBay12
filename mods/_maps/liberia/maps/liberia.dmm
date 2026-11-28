@@ -2623,7 +2623,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/liberia/bridge)
 "ep" = (
-/obj/machinery/atm{
+/obj/machinery/atm/liberia/mule{
 	pixel_y = -30
 	},
 /obj/structure/window/reinforced{
@@ -3592,7 +3592,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/engineeringstorage)
 "fY" = (
-/obj/machinery/atm{
+/obj/machinery/atm/liberia{
 	pixel_x = -30
 	},
 /obj/structure/disposalpipe/segment,
@@ -8834,7 +8834,7 @@
 /turf/simulated/floor/tiled,
 /area/liberia/traidingroom)
 "VS" = (
-/obj/machinery/atm{
+/obj/machinery/atm/liberia/mule{
 	pixel_y = -30
 	},
 /obj/structure/window/reinforced{

@@ -1,4 +1,6 @@
-// Frontier Alliance: Blockade Runners Extension (Playable Colony) by GarryFlint
+// Frontier Alliance: Blockade Runners Extension (Playable Colony)
+// Author: GarryFlint
+// Please keep this credit
 
 /datum/map_template/ruin/exoplanet/facolony
 	name = "FA Blockade Runners Outpost"
@@ -282,8 +284,8 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/machinery/power/smes/buildable/preset/facolony
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/smes_coil/super_capacity = 1,
-		/obj/item/stock_parts/smes_coil/super_io = 1
-		)
+		/obj/item/stock_parts/smes_coil = 1
+	)
 	_input_maxed = TRUE
 	_output_maxed = TRUE
 	_input_on = TRUE
@@ -358,6 +360,10 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	<tt><font face='Verdana' color='black'><center><img src='falogo.png'><br><b><large>Сообщение от<br>Передовой Базы 'Кельпи'<br>Объединённой Флотилии</large></b></center><hr><font size='1'><b>Форма:</b> СС-UFCO-COMFA<br><b>Объект:</b> <u>ПБ 'Кельпи'</u><br><b>Отправитель:</b> <u>Агент Дальней Связи Смотритель 'Джаред'</u><br><b>Подпись:</b> <u><i>J-R-D</i></u><br><b>Время:</b> <u>\[time\]</u><br><b>Дата:</b> <u>\[date\]</u></font><hr><font size='1'><b>Объект-получатель:</b> <u>IPV 'Celeste Hauler'</u><br><b>Адресат:</b> <u>B.R. \[date\]</u></font><hr><center><b>Сообщение</b></center>Приветствуем вас, Блокадники!<br>Мы рады наблюдать, что операция по изъятию активов завершилась успешно.<br><br>Судя по вашим отчётам, у тягача был внушительный запас ресурсов, включая добытое вами дополнительно, — поэтому развёрнутый торговый пункт держится стабильно. У вас остаётся несколько незаконченных секций базы — нам не терпится узнать, под что вы их оборудуете.<br><br>Однако, как бы хорошо вам сейчас ни жилось, помните, ради чего вы пошли на этот угон.<br>Блокада, поддерживаемая оккупантами из ЦПСС, всё ещё действует, а значит, на ваших плечах лежит задача добывать ресурсы максимально широкого спектра: от материалов и медикаментов — до вооружения и сложных технологий. Место, где вы сейчас находитесь, — важный узел будущей торговли между империалистическими государствами: в частности, оно расположено у границ Скрелльской Империи.<br><br>Корабли Ассамблеи, Конфедерации, Позитронного союза, а также суда частных лиц и компаний будут проходить через вас. Ваша задача — извлечь максимум прибыли: торгуйте найденными предметами, обменивайтесь информацией и прокладывайте маршруты тем, кто ищет свободу от цепей империалистов.<br><br>Важно помнить об осторожности. Не доверяйте каждому встречному — ориентируйтесь на систему медалей и проверенные каналы. Если солдаты ЦПСС установят вашу связь с Альянсом Фронтира, всё закончится мгновенно. Не допускайте их граждан вглубь территории и тем более не раскрывайте секретные помещения. Держитесь легенды независимых предпринимателей и колонистов.<br><br>ГКК не наш прямой противник, но и не союзник; не стоит верить им лишь потому, что они по другую сторону баррикад от Ассамблеи. Если ЦПСС перейдёт к открытому давлению, солдаты ГКК, скорее всего, попытаются усыпить вашу бдительность сладкими речами. Не поддавайтесь и не раскрывайте ничего сверх легенды.<br><br>Блокада никуда не делась. Её прорыв — на плечах Блокадных Беглецов. Сделайте всё, чтобы наш дом не знал голода.<br><br><center><b>Конец сообщения</b></center><hr><center><b>МП</b></center><hr><font size='1'><i>*Данная форма документа обязательно должна подтверждаться подписью или печатью ответственного лица. В случае наличия опечаток и отсутствия подписей или печатей документ считается недействительным;<br>*Получатель(и) данной трансляции сообщения подтверждает(ют), что он(она/они) несут ответственность за любой ущерб, который может возникнуть в результате игнорирования приведённых здесь директив или рекомендаций;<br>*Все отчёты должны храниться конфиденциально их предполагаемым получателем и любой соответствующей стороной. Несанкционированное распространение данного сообщения может привести к дисциплинарным взысканиям.</i></font></font></tt>
 	"}
 
+/obj/item/paper/facolony/faxmessage/New()
+	info = replacetext(info, "Celeste Hauler", facolony_ship_name())
+	..()
+
 //////////////
 /// AREAS ///
 /////////////
@@ -365,6 +371,12 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /area/map_template/facolony
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	req_access = list(access_facolony)
+
+/area/map_template/facolony/New()
+	if(findtext(name, "Celeste Hauler"))
+		name = replacetext(name, "Celeste Hauler", facolony_ship_name())
+		GLOB.using_map.area_purity_test_exempt_areas += type
+	..()
 
 /area/map_template/facolony/dockingarea
 	name = "\improper Docking Area"
@@ -514,14 +526,32 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	name = "Celeste Hauler control console"
 	shuttle_tag = "IPV Celeste Hauler"
 
+/obj/machinery/computer/shuttle_control/explore/celestehauler/Initialize()
+	name = "[facolony_ship_name()] control console"
+	return ..()
+
+/obj/machinery/atm/celestehauler/New()
+	..()
+	machine_id = replacetext(machine_id, station_name(), "IPV [facolony_ship_name()]")
+
 /obj/overmap/visitable/ship/landable/celestehauler
 	name = "IPV Celeste Hauler"
 	desc = "DESC"
 	shuttle = "IPV Celeste Hauler"
 	fore_dir = NORTH
-	color = "#e6f7ff"
 	vessel_size = SHIP_SIZE_SMALL
 	vessel_mass = 10000
+
+GLOBAL_VAR(facolony_ship_name)
+
+/proc/facolony_ship_name()
+	if(!GLOB.facolony_ship_name)
+		GLOB.facolony_ship_name = pick("Resolute", "Erebus", "Celeste Hauler", "Kobenhavn", "Zebrina Hauler", "Jian Seng")
+	return GLOB.facolony_ship_name
+
+/obj/overmap/visitable/ship/landable/celestehauler/Initialize()
+	name = "IPV [facolony_ship_name()]"
+	return ..()
 
 /obj/shuttle_landmark/facolony/celestehauler/start
 	name = "C-type Cargo Hatch Connector"

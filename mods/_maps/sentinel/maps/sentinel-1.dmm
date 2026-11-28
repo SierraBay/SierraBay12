@@ -3711,15 +3711,15 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "gW" = (
-/obj/machinery/power/apc{
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/critical{
 	dir = 4;
 	name = "east bump";
 	pixel_x = 24;
 	req_access = list("ACCESS_CAVALRY")
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
@@ -8963,6 +8963,9 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
+"rG" = (
+/turf/space,
+/area/ship/patrol/maintenance/engine/port)
 "rI" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/computer/ship/helm{
@@ -9508,10 +9511,21 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/barracks)
 "CW" = (
-/obj/paint/red,
 /obj/structure/sign/warning/hot_exhaust,
+/obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/port)
+"Db" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/machinery/ion_engine{
+	dir = 8;
+	opacity = 1;
+	density = 1
+	},
+/turf/simulated/floor/reinforced,
+/area/ship/patrol/command/hangar)
 "Dp" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -9629,6 +9643,10 @@
 	},
 /turf/simulated/floor,
 /area/ship/patrol/engineering/fussion/control)
+"EO" = (
+/obj/paint/red,
+/turf/simulated/wall/r_wall,
+/area/ship/patrol/command/hangar)
 "Fo" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -10186,6 +10204,11 @@
 	},
 /turf/simulated/wall/r_titanium,
 /area/ship/reaper)
+"OA" = (
+/obj/structure/sign/warning/hot_exhaust,
+/obj/paint/red,
+/turf/simulated/wall/r_wall,
+/area/ship/patrol/command/hangar)
 "OC" = (
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /obj/floor_decal/industrial/outline/grey,
@@ -10279,8 +10302,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "QH" = (
-/obj/paint/red,
 /obj/structure/sign/warning/hot_exhaust,
+/obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/engine/starboard)
 "QL" = (
@@ -21341,7 +21364,7 @@ nq
 NY
 nq
 CW
-tR
+rG
 aa
 aa
 aa
@@ -21935,12 +21958,12 @@ tu
 tu
 tu
 tu
-tu
-tu
-tu
-tu
-tu
-tu
+EO
+EO
+EO
+EO
+EO
+EO
 tu
 tu
 tu
@@ -22057,12 +22080,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+OA
+Db
+Db
+Db
+Db
+OA
 aa
 aa
 aa

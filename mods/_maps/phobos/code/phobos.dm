@@ -3,8 +3,7 @@
 	desc = "SCGF Cobra-class Patrol Craft. Belongs to Third Fleet Battle Group Alpha"
 	color = "#81c6ff"
 	fore_dir = WEST
-	vessel_mass = 5000
-	max_speed = 1/(2 SECONDS)
+	vessel_mass = 12000
 	place_near_main = list(5, 5)
 	initial_generic_waypoints = list(
 		"nav_phobos_1",
@@ -35,6 +34,12 @@
 	spawn_cost = 50 // We're testing this
 	area_usage_test_exempted_root_areas = list(/area/ship/phobos)
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/interseptor)
+	apc_test_exempt_areas = list(
+		/area/ship/phobos/maint/starboard/bridge = NO_SCRUBBER|NO_VENT,
+		/area/ship/phobos/maint/port = NO_SCRUBBER|NO_VENT,
+		/area/ship/phobos/engine/solar/starboard = NO_SCRUBBER|NO_VENT|NO_APC,
+		/area/ship/phobos/engine/solar/port = NO_SCRUBBER|NO_VENT|NO_APC
+	)
 // We're deep in frontier. So no elite troops or terrans
 	#ifndef DEV_MODE
 	ban_ruins = list(
@@ -83,7 +88,7 @@
 	shuttle = "Interseptor Shuttle"
 	fore_dir = WEST
 	color = "#81c6ff"
-	vessel_mass = 2500
+	vessel_mass = 500
 	vessel_size = SHIP_SIZE_TINY
 
 /area/ship/interseptor

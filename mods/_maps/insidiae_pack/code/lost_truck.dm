@@ -3,7 +3,7 @@
 	desc = "Sensors detect an undamaged vessel and a small cloud of debris on the starboard side, no signs of activity."
 	color = "#ad7026"
 	vessel_mass = 17000
-	max_speed = 1/(4 SECONDS)
+	max_speed = 1/(2 SECONDS)
 	burn_delay = 4 SECONDS
 	initial_generic_waypoints = list(
 		"nav_lost_truck_1",

@@ -8,7 +8,7 @@
 	desc = "SCGF Cobra-class Patrol Craft. Seconded to Battlegroup Bravo of Fifth Fleet "
 	color = "#990000"
 	fore_dir = WEST
-	vessel_mass = 1000
+	vessel_mass = 15000
 	known_ships = list(/obj/overmap/visitable/ship/landable/reaper)
 	vessel_size = SHIP_SIZE_SMALL
 	start_x = 1
