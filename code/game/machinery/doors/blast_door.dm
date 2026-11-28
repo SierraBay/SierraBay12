@@ -273,11 +273,13 @@
 
 /obj/machinery/door/blast/regular/escape_pod
 	name = "escape pod release door"
+	init_flags = INIT_MACHINERY_START_PROCESSING // [SIERRA-ADD] - Polls evacuation controller
 
 /obj/machinery/door/blast/regular/escape_pod/Process()
 	if(evacuation_controller.emergency_evacuation && evacuation_controller.state >= EVAC_LAUNCHING && src.icon_state == icon_state_closed)
 		src.force_open()
-	. = ..()
+	..()
+	return null // [SIERRA-EDIT] - Keep polling until pod launches
 
 /obj/machinery/door/blast/regular/open
 	begins_closed = FALSE

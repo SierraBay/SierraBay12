@@ -14,6 +14,7 @@
 	level = ATOM_LEVEL_UNDER_TILE
 
 	var/hibernate = 0 //Do we even process?
+	var/datum/timer/hibernate_timer // [SIERRA-ADD] - Timer ID used to wake up without polling every tick
 	var/scrubbing = SCRUBBER_EXCHANGE
 	var/list/scrubbing_gas
 
@@ -135,19 +136,57 @@
 	. = ..()
 	toggle_input_toggle()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Process()
+// [SIERRA-ADD] - Timer-backed hibernation and event wakeups
+/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+	if(hibernate_timer)
+		deltimer(hibernate_timer)
+		hibernate_timer = null
+	return ..()
+
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/wake_from_hibernation()
+	if(hibernate_timer)
+		deltimer(hibernate_timer)
+		hibernate_timer = null
+	hibernate = FALSE
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/on_hibernate_timeout()
+	hibernate_timer = null
+	wake_from_hibernation()
+
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/hibernate_for(duration)
+	if(hibernate_timer)
+		deltimer(hibernate_timer)
+	hibernate_timer = addtimer(new Callback(src, PROC_REF(on_hibernate_timeout)), duration, return_handle = TRUE)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/power_change()
+	. = ..()
+	if(. && is_powered())
+		wake_from_hibernation()
+
+/obj/machinery/atmospherics/unary/vent_scrubber/update_use_power(new_use_power)
 	..()
+	if(use_power)
+		wake_from_hibernation()
+// [/SIERRA-ADD]
+
+/obj/machinery/atmospherics/unary/vent_scrubber/Process()
+	// [SIERRA-EDIT] - Skip parent build_network() when already networked, and unqueue during hibernation/off states
+	last_flow_rate = 0
+	last_power_draw = 0
+	if(!network && node)
+		build_network()
 
 	if (hibernate > world.time)
-		return 1
+		hibernate_for(hibernate - world.time)
+		return PROCESS_KILL
 
 	if (!node)
 		update_use_power(POWER_USE_OFF)
 	//broadcast_status()
-	if(!use_power || (inoperable()))
-		return 0
-	if(welded)
-		return 0
+	if(!use_power || (inoperable()) || welded)
+		return PROCESS_KILL
+	// [/SIERRA-EDIT]
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -161,9 +200,12 @@
 		transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SCRUBBER_FLOWRATE/environment.volume)	//group_multiplier gets divided out here
 		power_draw = scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, power_rating)
 
-	if(scrubbing != SCRUBBER_SIPHON && power_draw <= 0)	//99% of all scrubbers
-		//Fucking hibernate because you ain't doing shit.
-		hibernate = world.time + (rand(100,200))
+	if(scrubbing != SCRUBBER_SIPHON && power_draw <= 0)
+		// Zero power can still mean gas moved downhill into the pipe.
+		if(power_draw == 0 && network)
+			network.update = 1
+		hibernate_for(rand(100, 200)) // [SIERRA-EDIT]
+		return PROCESS_KILL
 	else if(scrubbing == SCRUBBER_EXCHANGE) // after sleep check so it only does an exchange if there are bad gasses that have been scrubbed
 		transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SCRUBBER_FLOWRATE/environment.volume)
 		power_draw += pump_gas(src, environment, air_contents, transfer_moles / 4, power_rating)
@@ -189,6 +231,7 @@
 	for(var/gas_id in gases)
 		if((gas_id in scrubbing_gas) ^ gases[gas_id])
 			scrubbing_gas ^= gas_id
+	wake_from_hibernation() // [SIERRA-ADD]
 
 /obj/machinery/atmospherics/unary/vent_scrubber/cannot_transition_to(state_path, mob/user)
 	if(state_path == /singleton/machine_construction/default/deconstructed)
@@ -221,6 +264,8 @@
 			return TRUE
 
 		welded = !welded
+		if(!welded) // [SIERRA-ADD]
+			wake_from_hibernation()
 		update_icon()
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 		user.visible_message(
@@ -242,7 +287,7 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/refresh()
 	..()
-	hibernate = FALSE
+	wake_from_hibernation() // [SIERRA-EDIT]
 	toggle_input_toggle()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on/sauna/reset_scrubbing()
@@ -268,6 +313,7 @@
 		machine.scrubbing = new_value
 		if(new_value != SCRUBBER_SIPHON)
 			machine.panic = FALSE
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_variable/panic
 	expected_type = /obj/machinery/atmospherics/unary/vent_scrubber
@@ -291,6 +337,7 @@
 			machine.scrubbing = SCRUBBER_SIPHON
 		else
 			machine.scrubbing = SCRUBBER_EXCHANGE
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_variable/scrubbing_gas
 	expected_type = /obj/machinery/atmospherics/unary/vent_scrubber

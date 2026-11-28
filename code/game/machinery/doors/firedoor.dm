@@ -82,6 +82,9 @@
 			LAZYADD(A.all_doors, src)
 			areas_added += A
 
+	if(density) // [SIERRA-ADD] - Only process closed firedoors
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/door/firedoor/Destroy()
 	for(var/area/A in areas_added)
 		LAZYREMOVE(A.all_doors, src)
@@ -326,6 +329,8 @@
 
 // CHECK PRESSURE
 /obj/machinery/door/firedoor/Process()
+	if(!density && !closing) // [SIERRA-ADD] - Stop processing once opened
+		return PROCESS_KILL
 	if(density && next_process_time <= world.time)
 		next_process_time = world.time + 100		// 10 second delays between process updates
 		var/changed = 0
@@ -438,6 +443,7 @@
 					M.Move(get_step(src, direction))
 	playsound(loc, close_sound, 25, TRUE)
 	closing = FALSE
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 	return ..()
 
 /obj/machinery/door/firedoor/open(forced = FALSE)

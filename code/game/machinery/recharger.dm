@@ -17,6 +17,7 @@
 	var/portable = 1
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Only process while an item is inserted
 
 /obj/machinery/recharger/Initialize()
 	. = ..()
@@ -52,6 +53,7 @@
 		if(user.unEquip(G))
 			G.forceMove(src)
 			charging = G
+			START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 			update_icon()
 			return TRUE
 
@@ -74,15 +76,22 @@
 		update_icon()
 		return TRUE
 
+/obj/machinery/recharger/power_change() // [SIERRA-ADD]
+	. = ..()
+	if(charging && !inoperable() && anchored)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/recharger/Process()
+	// [SIERRA-EDIT] - Stop processing when empty, unanchored, or inoperable
 	if(inoperable() || !anchored)
 		update_use_power(POWER_USE_OFF)
 		icon_state = icon_state_idle
-		return
+		return PROCESS_KILL
 
 	if(!charging)
 		update_use_power(POWER_USE_IDLE)
 		icon_state = icon_state_idle
+		return PROCESS_KILL
 	else
 		var/obj/item/cell/C = charging.get_cell()
 		if(istype(C))
@@ -93,6 +102,7 @@
 			else
 				icon_state = icon_state_charged
 				update_use_power(POWER_USE_IDLE)
+	// [/SIERRA-EDIT]
 
 /obj/machinery/recharger/emp_act(severity)
 	if(inoperable() || !anchored)

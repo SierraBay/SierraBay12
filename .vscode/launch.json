@@ -31,6 +31,27 @@
       "postDebugTask": "dm: show unit test results",
       "dmb": "${workspaceFolder}/baystation12.dmb",
       "dreamDaemon": true
+    },
+    {
+      "type": "auxtools",
+      "request": "launch",
+      "name": "auxtools: Build & Debug",
+      "preLaunchTask": "dm: build - ${command:dreammaker.getFilenameDme}",
+      "dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+      "server": "dreamdaemon"
+    },
+    {
+      "type": "auxtools",
+      "request": "launch",
+      "name": "auxtools: Debug",
+      "dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+      "server": "dreamdaemon"
+    },
+    {
+      "type": "auxtools",
+      "request": "attach",
+      "name": "auxtools: Attach",
+      "processId": "${command:auxtools.pickWorld}"
     }
   ]
 }

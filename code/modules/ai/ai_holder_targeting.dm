@@ -28,25 +28,41 @@
 	. = ohearers(vision_range, holder)
 	. -= GLOB.dview_mob
 
-	for (var/HM in range(vision_range, holder))
-		if (!(istype(HM, /obj/machinery/porta_turret) || \
-			  istype(HM, /mob/living/exosuit) || \
-			  istype(HM, /obj/blob)))
-			continue
-		if (can_see(holder, HM, vision_range))
-			. += HM
+	// [SIERRA-EDIT] - Check tracked special targets instead of iterating every atom in range()
+	var/list/spec = SSai.special_targets
+	if (length(spec))
+		var/turf/T = isturf(holder.loc) ? holder.loc : get_turf(holder)
+		if (T)
+			var/hx = T.x
+			var/hy = T.y
+			var/hz = T.z
+			var/vr = vision_range
+			for (var/atom/movable/HM as anything in spec)
+				if (HM.z == hz && abs(HM.x - hx) <= vr && abs(HM.y - hy) <= vr && can_see(holder, HM, vr))
+					. |= HM
+	// [/SIERRA-EDIT]
 
 /// Step 2, filter down possible targets to things we actually care about.
 /datum/ai_holder/proc/find_target(list/possible_targets, has_targets_list = FALSE)
 	ai_log("find_target() : Entering.", AI_LOG_TRACE)
 	if (!hostile) // So retaliating mobs only attack the thing that hit it.
 		return null
-	. = list()
+	// [SIERRA-EDIT] - Skip allocation and pick_target/give_target when no targets are found
 	if (!has_targets_list)
 		possible_targets = list_targets()
+	if (!length(possible_targets))
+		if (target)
+			give_target(null)
+		return null
+	. = list()
 	for (var/possible_target in possible_targets)
 		if (can_attack(possible_target)) // Can we attack it?
 			. += possible_target
+	if (!length(.))
+		if (target)
+			give_target(null)
+		return null
+	// [/SIERRA-EDIT]
 
 	var/new_target = pick_target(.)
 	give_target(new_target)
@@ -157,6 +173,12 @@
 // For checking "soft loss" of a target. Some mobs can chase after a target if they cannot immediately see it.
 /datum/ai_holder/proc/can_attack(atom/movable/target, vision_required = TRUE)
 	ai_log("can_attack() : Entering.", AI_LOG_TRACE)
+	// [SIERRA-EDIT] - Reject allied/dead living targets before expensive can_see() raycasts
+	if (isliving(target) && !istype(target, /mob/living/exosuit))
+		if (!can_pursue(target))
+			return FALSE
+		return !vision_required || can_see_target(target)
+	// [/SIERRA-EDIT]
 	if (vision_required && !can_see_target(target))
 		return FALSE
 	return can_pursue(target)

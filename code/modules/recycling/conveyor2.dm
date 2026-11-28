@@ -10,6 +10,7 @@
 	anchored = TRUE
 
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Only process while running
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
 	var/backwards		// hopefully self-explanatory
@@ -68,12 +69,19 @@
 	operating = operating == 0 ? -1 : 0
 	setmove()
 
+/obj/machinery/conveyor/Initialize() // [SIERRA-ADD]
+	. = ..()
+	if(operating)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)
 		movedir = forwards
 	else if(operating == -1)
 		movedir = backwards
 	else operating = 0
+	if(operating) // [SIERRA-ADD]
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 	update_icon()
 
 /obj/machinery/conveyor/on_update_icon()
@@ -90,10 +98,10 @@
 	// machine process
 	// move items to the target location
 /obj/machinery/conveyor/Process()
-	if(inoperable())
-		return
-	if(!operating)
-		return
+	// [SIERRA-EDIT] - Stop processing when off or inoperable
+	if(inoperable() || !operating)
+		return PROCESS_KILL
+	// [/SIERRA-EDIT]
 	use_power_oneoff(100)
 
 	/**
@@ -172,6 +180,15 @@
 		C = locate() in get_step(src, turn(dir,180))
 		if(C)
 			C.set_operable(turn(dir,180), id, 0)
+	// [SIERRA-ADD] - Resume belt processing when repaired while active
+	else if(!new_state && operating && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/conveyor/power_change()
+	. = ..()
+	if(operating && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	// [/SIERRA-ADD]
 
 //set the operable var if ID matches, propagating in the given direction
 

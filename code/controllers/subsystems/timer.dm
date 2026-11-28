@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(timer)
 	subsystem.queue -= timer
 
 
-/proc/_addtimer(datum/callback/callback, wait, flags, datum/controller/subsystem/timer/subsystem = SStimer, source)
+/proc/_addtimer(datum/callback/callback, wait, flags, datum/controller/subsystem/timer/subsystem = SStimer, source, return_handle = FALSE)
 	var/datum/timer/timer = callback
 	if (!istype(timer))
 		timer = new
@@ -100,4 +100,4 @@ SUBSYSTEM_DEF(timer)
 			timer.hash = hash
 	timer.fire_time = timer.wait + world.time
 	BINARY_INSERT(timer, subsystem.queue, /datum/timer, timer, fire_time, COMPARE_KEY)
-	return timer.hash
+	return return_handle ? timer : timer.hash // [SIERRA-EDIT] - Direct handle avoids hashing uniquely owned timers

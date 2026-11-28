@@ -99,7 +99,16 @@
 
 	setup()
 
+// [SIERRA-ADD]
+/obj/machinery/porta_turret/Initialize()
+	. = ..()
+	SSai.special_targets |= src
+// [/SIERRA-ADD]
+
 /obj/machinery/porta_turret/Destroy()
+	// [SIERRA-ADD]
+	SSai.special_targets -= src
+	// [/SIERRA-ADD]
 	qdel(spark_system)
 	spark_system = null
 	. = ..()

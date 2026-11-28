@@ -36,6 +36,7 @@
 	if(!machine)
 		machine = loc
 	if(istype(machine))
+		start_processing(machine) // [SIERRA-ADD]
 		machine.power_change()
 		machine.queue_icon_update()
 	set_status(machine, PART_STAT_CONNECTED)
@@ -87,11 +88,20 @@
 		machine.power_change()
 		return // This suggests that we should be powering the machine instead, so let's try that
 
-	// try and recharge
-	var/area/A = get_area(machine)
-	if(!can_charge || !cell || cell.fully_charged() || !A.powered(charge_channel))
+	// [SIERRA-EDIT] - Check cheap charge/cell guards before get_area() and stop processing when full, empty, disabled, or unpowered
+	if(!cell)
 		charge_wait_counter = initial(charge_wait_counter)
+		return PROCESS_KILL
+	if(!can_charge || cell.fully_charged())
+		charge_wait_counter = initial(charge_wait_counter)
+		if(machine.is_powered() || !can_charge)
+			return PROCESS_KILL
 		return
+	var/area/A = get_area(machine)
+	if(!A || !A.powered(charge_channel))
+		charge_wait_counter = initial(charge_wait_counter)
+		return PROCESS_KILL
+	// [/SIERRA-EDIT]
 	if(charge_wait_counter > 0)
 		charge_wait_counter--
 		return
@@ -99,11 +109,22 @@
 	A.use_power_oneoff(give, charge_channel)
 
 /obj/item/stock_parts/power/battery/can_provide_power(obj/machinery/machine)
-	if(cell && cell.check_charge(CELLRATE * machine.get_power_usage()))
+	// [SIERRA-EDIT] - Never power a machine from an empty cell, and require minimum APC startup buffer on low batteries
+	if(!cell || cell.charge <= 0)
+		return FALSE
+	var/req_charge = CELLRATE * machine.get_power_usage()
+	if(istype(machine, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/apc_machine = machine
+		if(!apc_machine.autoflag)
+			req_charge = max(req_charge, 1)
+	if(cell.check_charge(req_charge))
 		machine.update_power_channel(LOCAL)
 		set_status(machine, PART_STAT_ACTIVE)
+		if(!(status & PART_STAT_PROCESSING)) // [SIERRA-ADD]
+			start_processing(machine)
 		return TRUE
 	return FALSE
+	// [/SIERRA-EDIT]
 
 /obj/item/stock_parts/power/battery/can_use_power_oneoff(obj/machinery/machine, amount, channel)
 	. = 0
@@ -115,11 +136,15 @@
 	if(cell && channel == LOCAL)
 		. = cell.use(amount * CELLRATE) / CELLRATE
 		charge_wait_counter = initial(charge_wait_counter) // If we are providing power, we wait to start charging.
+		if(can_charge && !cell.fully_charged()) // [SIERRA-ADD]
+			start_processing(machine)
 
 /obj/item/stock_parts/power/battery/not_needed(obj/machinery/machine)
 	if(status & PART_STAT_ACTIVE)
 		unset_status(machine, PART_STAT_ACTIVE)
 		charge_wait_counter = initial(charge_wait_counter)
+	if(can_charge && !(status & PART_STAT_PROCESSING) && cell && !cell.fully_charged()) // [SIERRA-ADD]
+		start_processing(machine)
 
 // Find a cell from the machine building materials if possible.
 /obj/item/stock_parts/power/battery/on_refresh(obj/machinery/machine)

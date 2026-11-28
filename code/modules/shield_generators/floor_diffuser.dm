@@ -26,7 +26,7 @@
 			update_icon()
 		return
 
-	if(!enabled)
+	if(inoperable() || !enabled) // [SIERRA-EDIT]
 		return
 	for(var/direction in GLOB.cardinal)
 		var/turf/simulated/shielded_tile = get_step(get_turf(src), direction)

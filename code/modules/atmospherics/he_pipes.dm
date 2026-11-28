@@ -60,17 +60,20 @@
 		..()
 	else
 		var/datum/gas_mixture/pipe_air = return_air()
-		if(istype(loc, /turf/simulated))
+		// [SIERRA-EDIT] - Cache turf loc and skip space blackbody radiation for empty pipes
+		var/turf/T = loc
+		if(istype(T, /turf/simulated))
 			var/environment_temperature = 0
-			if(loc:blocks_air)
-				environment_temperature = loc:temperature
+			if(T:blocks_air)
+				environment_temperature = T:temperature
 			else
-				var/datum/gas_mixture/environment = loc.return_air()
+				var/datum/gas_mixture/environment = T.return_air()
 				environment_temperature = environment.temperature
 			if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
-				parent.temperature_interact(loc, volume, thermal_conductivity)
-		else if(istype(loc, /turf/space))
+				parent.temperature_interact(T, volume, thermal_conductivity)
+		else if(istype(T, /turf/space) && pipe_air.total_moles > 0)
 			parent.radiate_heat_to_space(surface, 1)
+		// [/SIERRA-EDIT]
 
 		if(buckled_mob)
 			var/hc = pipe_air.heat_capacity()

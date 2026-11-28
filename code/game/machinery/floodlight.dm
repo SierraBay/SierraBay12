@@ -12,6 +12,7 @@
 	active_power_usage = 200
 	power_channel = LIGHT
 	use_power = POWER_USE_OFF
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Floodlights have no self-processing loop
 
 	machine_name = "emergency floodlight"
 	machine_desc = "A portable, battery-powered LED flood lamp used to illuminate large areas."

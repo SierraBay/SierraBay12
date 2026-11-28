@@ -11,6 +11,7 @@
 	density = TRUE
 	layer = CLOSED_DOOR_LAYER
 	interact_offline = TRUE
+	init_flags = FLAGS_OFF // [SIERRA-EDIT] - Doors only process while a close timer is active
 
 	health_max = 300
 	health_min_damage = 10
@@ -100,12 +101,18 @@
 	. = ..()
 
 /obj/machinery/door/Process()
-	if(close_door_at && world.time >= close_door_at)
-		if(autoclose)
-			close_door_at = next_close_time()
-			close()
-		else
-			close_door_at = 0
+	// [SIERRA-EDIT] - Stop processing once close_door_at timer is inactive
+	if(close_door_at)
+		if(world.time >= close_door_at)
+			if(autoclose)
+				close_door_at = next_close_time()
+				close()
+			else
+				close_door_at = 0
+				return PROCESS_KILL
+		return
+	return PROCESS_KILL
+	// [/SIERRA-EDIT]
 
 /obj/machinery/door/proc/can_open()
 	if(!density || operating)
@@ -353,6 +360,7 @@
 
 	if(autoclose)
 		close_door_at = next_close_time()
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 
 	return 1
 

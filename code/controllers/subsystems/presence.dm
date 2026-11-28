@@ -12,19 +12,24 @@ SUBSYSTEM_DEF(presence)
 
 /datum/controller/subsystem/presence/Recover()
 	queue.Cut()
-	build.Cut()
+	build = null
 
 
+// [SIERRA-EDIT] - Use numeric z-level array instead of stringified keys
 /datum/controller/subsystem/presence/fire(resume, no_mc_tick)
 	if (!resume)
-		queue = GLOB.player_list.Copy()
+		queue = GLOB.living_players.Copy()
 		build = list()
+		LIST_RESIZE(build, world.maxz)
 	var/cut_until = 1
-	for (var/mob/living/player as anything in GLOB.living_players)
+	var/build_len = length(build)
+	for (var/mob/living/player as anything in queue)
 		++cut_until
 		if (QDELETED(player) || player.is_real_dead())
 			continue
-		++build["[get_z(player)]"]
+		var/pz = player.z || get_z(player)
+		if (pz >= 1 && pz <= build_len)
+			build[pz] = (build[pz] || 0) + 1
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
@@ -40,7 +45,11 @@ SUBSYSTEM_DEF(presence)
 
 /// 0, or the number of living players on level
 /datum/controller/subsystem/presence/proc/population(level)
-	return levels["[level]"] || 0
+	var/list/L = levels
+	if (level < 1 || level > length(L))
+		return 0
+	return L[level] || 0
+// [/SIERRA-EDIT]
 
 #else
 

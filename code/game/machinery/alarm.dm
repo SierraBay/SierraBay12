@@ -104,6 +104,15 @@
 	var/environment_type = /singleton/environment_data
 	var/report_danger_level = 1
 
+	// [SIERRA-ADD] - Cache last evaluated atmosphere signature to skip redundant danger_level recalculation
+	var/last_env_temp
+	var/last_env_moles
+	var/last_env_vol
+	var/last_env_o2
+	var/last_env_co2
+	var/last_env_other_moles
+	// [/SIERRA-ADD]
+
 /obj/machinery/alarm/cold
 	target_temperature = T0C+4
 
@@ -170,7 +179,7 @@
 	var/singleton/environment_data/env_info = GET_SINGLETON(environment_type)
 	for(var/g in gas_data.gases)
 		if(!env_info.important_gasses[g])
-			trace_gas += g
+			trace_gas[g] = TRUE // [SIERRA-EDIT] - Associative lookup for O(1) trace gas checks
 
 	set_frequency(frequency)
 	update_icon()
@@ -188,28 +197,49 @@
 	if(!istype(location))	return//returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
+	// [SIERRA-EDIT] - Reuse single return_pressure() result and skip overall_danger_level() when air mixture is unchanged
+	var/env_pressure = environment.return_pressure()
 
 	//Handle temperature adjustment here.
-	if(environment.return_pressure() > ONE_ATMOSPHERE*0.05)
+	if(env_pressure > ONE_ATMOSPHERE*0.05)
 		handle_heating_cooling(environment)
+		if(regulating_temperature)
+			env_pressure = environment.return_pressure()
 
-	var/old_level = danger_level
-	danger_level = overall_danger_level(environment)
+	var/list/env_gas = environment.gas
+	var/sig_temp = environment.temperature
+	var/sig_moles = environment.total_moles
+	var/sig_vol = environment.volume
+	var/sig_o2 = env_gas[GAS_OXYGEN]
+	var/sig_co2 = env_gas[GAS_CO2]
+	var/sig_other_moles = get_other_moles(env_gas)
 
-	if (old_level != danger_level)
-		if(danger_level == 2)
-			playsound(src.loc, 'sound/machines/airalarm.ogg', 25, 0, 4)
-		apply_danger_level(danger_level)
+	if(sig_temp != last_env_temp || sig_moles != last_env_moles || sig_vol != last_env_vol || sig_o2 != last_env_o2 || sig_co2 != last_env_co2 || sig_other_moles != last_env_other_moles)
+		last_env_temp = sig_temp
+		last_env_moles = sig_moles
+		last_env_vol = sig_vol
+		last_env_o2 = sig_o2
+		last_env_co2 = sig_co2
+		last_env_other_moles = sig_other_moles
+
+		var/old_level = danger_level
+		danger_level = overall_danger_level(environment, env_pressure, sig_other_moles)
+
+		if (old_level != danger_level)
+			if(danger_level == 2)
+				playsound(src.loc, 'sound/machines/airalarm.ogg', 25, 0, 4)
+			apply_danger_level(danger_level)
 
 	if (pressure_dangerlevel != 0)
 		if (breach_detected())
 			mode = AALARM_MODE_OFF
 			apply_mode()
 
-	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
+	if (mode==AALARM_MODE_CYCLE && env_pressure<ONE_ATMOSPHERE*0.05)
 		breach_start_cooldown()
 		mode=AALARM_MODE_FILL
 		apply_mode()
+	// [/SIERRA-EDIT]
 
 	//atmos computer remote controll stuff
 	switch(rcon_setting)
@@ -228,14 +258,14 @@
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
 	if (!regulating_temperature)
 		//check for when we should start adjusting temperature
-		if(!get_danger_level(target_temperature, TLV["temperature"]) && abs(environment.temperature - target_temperature) > 2.0)
+		if(abs(environment.temperature - target_temperature) > 2.0 && !get_danger_level(target_temperature, TLV["temperature"])) // [SIERRA-EDIT]
 			update_use_power(POWER_USE_ACTIVE)
 			regulating_temperature = 1
 			visible_message("\The [src] clicks as it starts [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
 			"You hear a click and a faint electronic hum.")
 	else
 		//check for when we should stop adjusting temperature
-		if (get_danger_level(target_temperature, TLV["temperature"]) || abs(environment.temperature - target_temperature) <= 0.5)
+		if (abs(environment.temperature - target_temperature) <= 0.5 || get_danger_level(target_temperature, TLV["temperature"])) // [SIERRA-EDIT]
 			update_use_power(POWER_USE_IDLE)
 			regulating_temperature = 0
 			visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
@@ -270,17 +300,22 @@
 
 			environment.merge(gas)
 
-/obj/machinery/alarm/proc/overall_danger_level(datum/gas_mixture/environment)
-	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
-	var/environment_pressure = environment.return_pressure()
+/obj/machinery/alarm/proc/get_other_moles(list/env_gas) // [SIERRA-ADD]
+	. = 0
+	for(var/g in env_gas)
+		if(trace_gas[g])
+			. += env_gas[g]
 
-	var/other_moles = 0
-	for(var/g in trace_gas)
-		other_moles += environment.gas[g] //this is only going to be used in a partial pressure calc, so we don't need to worry about group_multiplier here.
+/obj/machinery/alarm/proc/overall_danger_level(datum/gas_mixture/environment, env_pressure, other_moles)
+	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
+	var/environment_pressure = isnull(env_pressure) ? environment.return_pressure() : env_pressure // [SIERRA-EDIT]
+	var/list/env_gas = environment.gas
+	if(isnull(other_moles))
+		other_moles = get_other_moles(env_gas)
 
 	pressure_dangerlevel = get_danger_level(environment_pressure, TLV["pressure"])
-	oxygen_dangerlevel = get_danger_level(environment.gas[GAS_OXYGEN]*partial_pressure, TLV[GAS_OXYGEN])
-	co2_dangerlevel = get_danger_level(environment.gas[GAS_CO2]*partial_pressure, TLV[GAS_CO2])
+	oxygen_dangerlevel = get_danger_level(env_gas[GAS_OXYGEN]*partial_pressure, TLV[GAS_OXYGEN]) // [SIERRA-EDIT]
+	co2_dangerlevel = get_danger_level(env_gas[GAS_CO2]*partial_pressure, TLV[GAS_CO2]) // [SIERRA-EDIT]
 	temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
 	other_dangerlevel = get_danger_level(other_moles*partial_pressure, TLV["other"])
 
@@ -546,9 +581,7 @@
 				"unit" = "%",
 				"danger_level" = env_info.dangerous_gasses[gas_id] ? co2_dangerlevel : oxygen_dangerlevel
 			)
-		var/other_moles = 0
-		for(var/g in trace_gas)
-			other_moles += environment.gas[g]
+		var/other_moles = get_other_moles(environment.gas) // [SIERRA-EDIT]
 		environment_data[LIST_PRE_INC(environment_data)] = list("name" = "Other Gases", "value" = other_moles / total * 100, "unit" = "%", "danger_level" = other_dangerlevel)
 
 		environment_data[LIST_PRE_INC(environment_data)] = list("name" = "Temperature", "value" = environment.temperature, "unit" = "K ([round(environment.temperature - T0C, 0.1)]C)", "danger_level" = temperature_dangerlevel)
@@ -780,6 +813,7 @@
 						if(selected[3] > selected[4])
 							selected[3] = selected[4]
 
+					last_env_temp = null // [SIERRA-ADD] - Force recalculation after threshold edits
 					apply_mode()
 					return TOPIC_REFRESH
 
@@ -923,6 +957,7 @@ FIRE ALARM
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 	var/seclevel
 	var/static/list/overlays_cache
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - fire_act() handles fires; Process() only runs during timing countdown
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
@@ -1069,8 +1104,12 @@ FIRE ALARM
 	return TRUE
 
 /obj/machinery/firealarm/Process()//Note: this processing was mostly phased out due to other code, and only runs when needed
+	// [SIERRA-EDIT] - Stop processing when timing is not active
+	if(!src.timing)
+		return PROCESS_KILL
 	if(inoperable())
 		return
+	// [/SIERRA-EDIT]
 
 	if(src.timing)
 		if(src.time > 0)

@@ -222,12 +222,11 @@
 /datum/ai_holder/simple_animal/melee/nurse_spider/list_targets()
 	. = ..()
 
-	var/static/alternative_targets = typecacheof(list(/obj/structure))
-
-	for(var/AT in typecache_filter_list(range(vision_range, holder), alternative_targets))
-		var/obj/O = AT
-		if(can_see(holder, O, vision_range) && !O.anchored)
+	// [SIERRA-EDIT] - Use typed view() loop instead of iterating all atoms in range()
+	for(var/obj/structure/O in view(vision_range, holder))
+		if(!O.anchored)
 			. += O
+	// [/SIERRA-EDIT]
 
 // Select an obj if no mobs are around.
 /datum/ai_holder/simple_animal/melee/nurse_spider/pick_target(list/targets)

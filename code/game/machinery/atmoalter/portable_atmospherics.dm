@@ -69,6 +69,7 @@
 	connected_port = new_port
 	connected_port.connected_device = src
 	connected_port.on = 1 //Activate port updates
+	START_PROCESSING_MACHINE(connected_port, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 
 	anchored = TRUE //Prevent movement
 

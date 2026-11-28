@@ -483,7 +483,7 @@ var/global/const/enterloopsanity = 100
 	. = is_outside
 	if(. == OUTSIDE_AREA)
 		var/area/A = get_area(src)
-		. = A ? A.area_flags & AREA_FLAG_EXTERNAL : OUTSIDE_NO
+		. = (A && (A.area_flags & AREA_FLAG_EXTERNAL)) ? OUTSIDE_YES : OUTSIDE_NO // [SIERRA-EDIT] - Normalize bitflag to boolean OUTSIDE_* so cache triggers
 
 	// If we are in a multiz volume and not already inside, we return
 	// the outside value of the highest unenclosed turf in the stack.
@@ -493,10 +493,12 @@ var/global/const/enterloopsanity = 100
 		while(HasAbove(top_of_stack.z))
 			var/turf/next_turf = GetAbove(top_of_stack)
 			if(!next_turf.is_open())
-				return OUTSIDE_NO
+				. = OUTSIDE_NO // [SIERRA-EDIT] - Cache roofed OUTSIDE_NO instead of early-returning before last_outside_check
+				break
 			top_of_stack = next_turf
 		// If we hit the top of the stack without finding a roof, we ask the upmost turf if we're outside.
-		. = top_of_stack.is_outside()
+		if(. == OUTSIDE_YES)
+			. = top_of_stack.is_outside()
 	if(. == OUTSIDE_YES || . == OUTSIDE_NO) //[SIERRA-ADD] - prevents magical memory leaks
 		last_outside_check = . // Cache this for later calls.
 
@@ -525,6 +527,8 @@ var/global/const/enterloopsanity = 100
 		var/turf/simulated/checksim = checking
 		if (istype(checksim))
 			checksim.update_external_atmos_participation()
+		else // [SIERRA-ADD]
+			checking.last_outside_check = OUTSIDE_UNCERTAIN
 		if(!checking.is_open())
 			break
 	return TRUE

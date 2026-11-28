@@ -137,6 +137,10 @@
 	var/failure_timer = 0               // Cooldown thing for apc outage event
 	var/force_update = 0
 	var/emp_hardened = 0
+	// [SIERRA-ADD] - Cache frequent component lookups used every APC Process() tick
+	var/obj/item/stock_parts/power/battery/cached_battery
+	var/obj/item/stock_parts/power/terminal/cached_terminal
+	// [/SIERRA-ADD]
 
 	/**
 	 * List of images. Cached icon overlays for the lock indicator.
@@ -271,6 +275,8 @@
 	power_change()
 
 /obj/machinery/power/apc/Destroy()
+	cached_battery = null // [SIERRA-ADD]
+	cached_terminal = null // [SIERRA-ADD]
 	src.update()
 	area.apc = null
 	area.power_light = 0
@@ -305,9 +311,27 @@
 
 	queue_icon_update()
 
+/obj/machinery/power/apc/RefreshParts() // [SIERRA-ADD]
+	. = ..()
+	cached_battery = get_component_of_type(/obj/item/stock_parts/power/battery)
+	cached_terminal = get_component_of_type(/obj/item/stock_parts/power/terminal)
+
+/obj/machinery/power/apc/component_destroyed(obj/item/component) // [SIERRA-ADD]
+	if(component == cached_battery)
+		cached_battery = null
+	if(component == cached_terminal)
+		cached_terminal = null
+	return ..()
+
 /obj/machinery/power/apc/proc/terminal()
-	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	var/obj/item/stock_parts/power/terminal/term = cached_terminal || (cached_terminal = get_component_of_type(/obj/item/stock_parts/power/terminal)) // [SIERRA-EDIT]
 	return term && term.terminal
+
+// [SIERRA-ADD] - Avoid generic component list scans on every APC Process/update tick
+/obj/machinery/power/apc/get_cell()
+	var/obj/item/stock_parts/power/battery/bat = cached_battery || (cached_battery = get_component_of_type(/obj/item/stock_parts/power/battery))
+	return bat && bat.cell
+// [/SIERRA-ADD]
 
 /obj/machinery/power/apc/examine(mob/user, distance)
 	. = ..()
@@ -874,6 +898,13 @@
 
 	area.power_change()
 
+	// [SIERRA-ADD] - Ensure battery backup resumes recharging once ENVIRON power returns
+	if(area.power_environ)
+		var/obj/item/stock_parts/power/battery/bat = cached_battery || (cached_battery = get_component_of_type(/obj/item/stock_parts/power/battery))
+		if(bat && bat.can_charge && !(bat.status & PART_STAT_PROCESSING) && bat.cell && !bat.cell.fully_charged())
+			bat.start_processing(src)
+	// [/SIERRA-ADD]
+
 	var/obj/item/cell/cell = get_cell()
 	if(!cell || cell.charge <= 0)
 		if(needs_powerdown_sound == TRUE)
@@ -981,10 +1012,12 @@
 	if(autoset(equipment, 2) >= POWERCHAN_ON)
 		. += area.usage(EQUIP)
 	if(autoset(environ, 1) >= POWERCHAN_ON)
-		. += area.usage(EQUIP)
+		. += area.usage(ENVIRON) // [SIERRA-EDIT] - Check ENVIRON usage instead of duplicate EQUIP lookup
 
 /obj/machinery/power/apc/Process()
-	if(!area.requires_power)
+	// [SIERRA-EDIT] - Inline hot area/terminal/cell checks, drop no-op parent call, and prevent low-charge flicker loops
+	var/area/A = src.area
+	if(!A.requires_power)
 		return PROCESS_KILL
 
 	if(MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
@@ -997,10 +1030,12 @@
 		force_update = 1
 		return
 
-	lastused_light = (lighting >= POWERCHAN_ON) ? area.usage(LIGHT) : 0
-	lastused_equip = (equipment >= POWERCHAN_ON) ? area.usage(EQUIP) : 0
-	lastused_environ = (environ >= POWERCHAN_ON) ? area.usage(ENVIRON) : 0
-	area.clear_usage()
+	lastused_light = (lighting >= POWERCHAN_ON) ? (A.used_light + A.oneoff_light) : 0
+	lastused_equip = (equipment >= POWERCHAN_ON) ? (A.used_equip + A.oneoff_equip) : 0
+	lastused_environ = (environ >= POWERCHAN_ON) ? (A.used_environ + A.oneoff_environ) : 0
+	A.oneoff_equip = 0
+	A.oneoff_light = 0
+	A.oneoff_environ = 0
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
 
@@ -1010,9 +1045,10 @@
 	var/last_en = environ
 	var/last_ch = charging
 
-	var/obj/machinery/power/terminal/terminal = terminal()
-	var/avail = (terminal && terminal.avail()) || 0
-	var/excess = (terminal && terminal.surplus()) || 0
+	var/obj/machinery/power/terminal/terminal = cached_terminal ? cached_terminal.terminal : terminal()
+	var/datum/powernet/PN = terminal && terminal.powernet
+	var/avail = PN ? PN.avail : 0
+	var/excess = PN ? (avail - PN.load) : 0
 
 	if(!avail)
 		main_status = 0
@@ -1021,27 +1057,29 @@
 	else
 		main_status = 2
 
-	var/obj/item/cell/cell = get_cell()
+	var/obj/item/stock_parts/power/battery/power = cached_battery || (cached_battery = get_component_of_type(/obj/item/stock_parts/power/battery))
+	var/obj/item/cell/cell = power && power.cell
+	var/apc_powered = !GET_FLAGS(stat, MACHINE_STAT_NOPOWER)
 	if(!cell || shorted) // We aren't going to be doing any power processing in this case.
 		charging = 0
 	else
-		..() // Actual processing happens in here.
-
 		if(debug)
 			log_debug("Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]")
 
 		//update state
-		var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
-		lastused_charging = max(power && power.cell && (power.cell.charge - power.last_cell_charge) * CELLRATE, 0)
+		var/cell_charge = cell.charge
+		lastused_charging = max((cell_charge - power.last_cell_charge) * CELLRATE, 0)
 		charging = lastused_charging ? 1 : 0
-		if(cell.fully_charged())
+		if(cell_charge >= cell.maxcharge)
 			charging = 2
 
-		if(!is_powered())
+		if(!apc_powered && (excess > 0 || (cell_charge > 0 && cell_charge >= max(1, CELLRATE * get_power_usage()))))
 			power_change() // We are the ones responsible for triggering listeners once power returns, so we run this to detect possible changes.
+			apc_powered = !GET_FLAGS(stat, MACHINE_STAT_NOPOWER)
 
 	// Set channels depending on how much charge we have left
-	update_channels()
+	update_channels(FALSE, cell, apc_powered)
+	// [/SIERRA-EDIT]
 
 	// update icon & area power if anything changed
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
@@ -1051,16 +1089,20 @@
 	else if (last_ch != charging)
 		queue_icon_update()
 
-/obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE)
+/obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE, obj/item/cell/cell = null, apc_powered = null)
+	// [SIERRA-EDIT] - Accept pre-fetched cell/power flags and fast-path steady powered APCs
 	// Allow the APC to operate as normal if the cell can charge
-	if(charging && longtermpower < 10)
-		longtermpower += 1
+	if(charging)
+		if(longtermpower < 10)
+			longtermpower += 1
 	else if(longtermpower > -10)
 		longtermpower -= 2
-	var/obj/item/cell/cell = get_cell()
-	var/percent = cell && cell.percent()
+	if(!cell)
+		cell = get_cell()
+	if(isnull(apc_powered))
+		apc_powered = !GET_FLAGS(stat, MACHINE_STAT_NOPOWER)
 
-	if(!cell || shorted || (!is_powered()) || !operating)
+	if(!cell || shorted || !apc_powered || !operating)
 		if(autoflag != 0)
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
@@ -1068,7 +1110,14 @@
 			if(!suppress_alarms)
 				GLOB.power_alarm.triggerAlarm(loc, src)
 			autoflag = 0
-	else if((percent > AUTO_THRESHOLD_LIGHTING) || longtermpower >= 0)              // Put most likely at the top so we don't check it last, effeciency 101
+		return
+
+	if(autoflag == 3 && longtermpower >= 0)
+		return
+
+	var/percent = cell.maxcharge && (100.0 * cell.charge / cell.maxcharge)
+
+	if((percent > AUTO_THRESHOLD_LIGHTING) || longtermpower >= 0)              // Put most likely at the top so we don't check it last, effeciency 101
 		if(autoflag != 3)
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
@@ -1091,6 +1140,7 @@
 			if(!suppress_alarms)
 				GLOB.power_alarm.triggerAlarm(loc, src)
 			autoflag = 1
+	// [/SIERRA-EDIT]
 
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
@@ -1171,10 +1221,12 @@
 
 /obj/machinery/power/apc/proc/set_chargemode(new_mode)
 	chargemode = new_mode
-	var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
+	var/obj/item/stock_parts/power/battery/power = cached_battery || (cached_battery = get_component_of_type(/obj/item/stock_parts/power/battery)) // [SIERRA-EDIT]
 	if(power)
 		power.can_charge = chargemode
 		power.charge_wait_counter = initial(power.charge_wait_counter)
+		if(chargemode && !(power.status & PART_STAT_PROCESSING) && power.cell && !power.cell.fully_charged()) // [SIERRA-ADD]
+			power.start_processing(src)
 
 // overload the lights in this APC area
 /obj/machinery/power/apc/proc/overload_lighting(chance = 100)

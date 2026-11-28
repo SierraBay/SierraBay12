@@ -10,7 +10,12 @@
 /obj/machinery/door/airlock/Process()
 	if (arePowerSystemsOn())
 		execute_current_command()
-	return ..()
+	// [SIERRA-EDIT] - Keep processing while a controller command is pending
+	. = ..()
+	if(cur_command)
+		return null
+	return .
+	// [/SIERRA-EDIT]
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -21,6 +26,7 @@
 
 /obj/machinery/door/airlock/proc/command(new_command)
 	cur_command = new_command
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 
 	//if there's no power, recieve the signal but just don't do anything. This allows airlocks to continue to work normally once power is restored
 	if(arePowerSystemsOn())

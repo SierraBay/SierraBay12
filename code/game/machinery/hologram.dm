@@ -55,6 +55,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 
 	var/holopadType = HOLOPAD_SHORT_RANGE //Whether the holopad is short-range or long-range.
 	var/base_icon = "holopad-B"
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Only process while calling or projecting holograms
 
 	var/allow_ai = TRUE
 
@@ -160,6 +161,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	targetpad.sourcepad = src //This marks the holopad you are making the call from
 	targetpad.caller_id = user //This marks you as the caller
 	targetpad.incoming_connection = 1
+	START_PROCESSING_MACHINE(targetpad, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 	playsound(targetpad.loc, 'sound/machines/chime.ogg', 25, 5)
 	targetpad.icon_state = "[targetpad.base_icon]1"
 	targetpad.audible_message("<b>\The [src]</b> announces, \"Incoming communications request from [targetpad.sourcepad.loc.loc].\"")
@@ -360,6 +362,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.color = color //painted holopad gives coloured holograms
 	set_light(2, 0.1)			//pad lighting
 	icon_state = "[base_icon]1"
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo(mob/living/silicon/ai/user, mob/living/carbon/caller_id)
@@ -402,6 +405,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			to_chat(sourcepad.caller_id, "Severing connection to distant holopad.")
 			end_call()
 			audible_message("The connection has been terminated by the caller.")
+	// [SIERRA-ADD] - Unqueue idle holopad once calls and active projections end
+	if(!length(masters) && !incoming_connection && !(caller_id && sourcepad))
+		return PROCESS_KILL
+	// [/SIERRA-ADD]
 	return 1
 
 /obj/machinery/hologram/holopad/proc/move_hologram(mob/living/silicon/ai/user)

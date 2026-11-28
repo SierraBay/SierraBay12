@@ -150,6 +150,7 @@
 	density = TRUE
 	anchored = TRUE
 	dir = WEST
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Only process when occupied
 
 	var/base_icon_state = "cryopod"
 	var/occupied_icon_state = "cryopod_closed"
@@ -211,6 +212,7 @@
 	occupied_icon_state = "redpod1"
 	var/launched = 0
 	var/datum/gas_mixture/airtank
+	init_flags = INIT_MACHINERY_START_PROCESSING // [SIERRA-ADD] - Lifepods watch evacuation state
 
 /obj/machinery/cryopod/lifepod/Initialize()
 	. = ..()
@@ -253,6 +255,7 @@
 		if(occupant && !launched)
 			launch()
 		..()
+	return null // [SIERRA-ADD] - Keep lifepod active even if parent returns PROCESS_KILL
 
 /obj/machinery/cryopod/New()
 	announce = new /obj/item/device/radio/intercom(src)
@@ -303,6 +306,8 @@
 
 //Lifted from Unity stasis.dm and refactored.
 /obj/machinery/cryopod/Process()
+	if(!occupant) // [SIERRA-ADD]
+		return PROCESS_KILL
 	if(occupant)
 		if(applies_stasis && iscarbon(occupant) && (world.time > time_entered + 20 SECONDS))
 			var/mob/living/carbon/C = occupant
@@ -573,6 +578,7 @@
 
 	SetName("[name] ([occupant])")
 	icon_state = occupied_icon_state
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 
 /obj/machinery/cryopod/relaymove(mob/user)
 	go_out()
