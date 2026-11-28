@@ -8,7 +8,7 @@
 	desc = "ICGNV Garibaldi-class Gunboat. This craft bears markings of Pioneer Corps"
 	color = "#fc7a00"
 	fore_dir = WEST
-	vessel_mass = 22470
+	vessel_mass = 20000
 	known_ships = list(/obj/overmap/visitable/ship/landable/snz)
 	vessel_size = SHIP_SIZE_SMALL
 	hide_from_reports = TRUE
@@ -50,7 +50,6 @@
 	player_cost = 7
 	spawn_weight = 1
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz, /datum/shuttle/autodock/ferry/farfleet_lift)
-
 	area_usage_test_exempted_areas = list(/area/turbolift/farfleet_lift)
 
 /obj/shuttle_landmark/nav_farfleet/nav1

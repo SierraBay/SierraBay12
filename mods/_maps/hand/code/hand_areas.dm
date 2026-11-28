@@ -50,7 +50,6 @@
 /area/ship/hand/crew/kitchen
 	name = "\improper Galley"
 	icon_state = "kitchen"
-	req_access = list(access_away_hand)
 
 /area/ship/hand/crew/hydro
 	name = "Hydroponics"
@@ -81,23 +80,18 @@
 /area/ship/hand/engineering/hallway
 	name = "\improper Engineering Hallway"
 	icon_state = "green"
-	req_access = list(access_away_hand)
 
 /area/ship/hand/engineering/port
 	name = "\improper Engineering Equipment"
 	icon_state = "green"
-	req_access = list(access_away_hand)
 
 /area/ship/hand/engineering/starboard
 	name = "\improper Engineering Equipment"
 	icon_state = "green"
-	req_access = list(access_away_hand)
 
 /area/ship/hand/engineering/storage
 	name = "\improper Engineering Storage"
 	icon_state = "green"
-	req_access = list(access_away_hand)
-
 
 /area/ship/hand/maintenance/solarport
 	name = "Solar Maintenance - Port"
@@ -111,12 +105,10 @@
 /area/ship/hand/medbay
 	name = "\improper Medical Bay"
 	icon_state = "medbay"
-	req_access = list(access_away_hand)
 
 /area/ship/hand/medbay/storage
 	name = "\improper Medical Bay Lobby"
 	icon_state = "medbay"
-	req_access = list(access_away_hand)
 
 
 
@@ -125,7 +117,6 @@
 	name = "\improper Atmospherics Comparment"
 	icon_state = "atmos"
 	ambience = HAND_ENG_AMBIENCE
-	req_access = list(access_away_hand)
 
 /area/ship/hand/maintenance/atmos/fuel
 	name = "\improper Fuel Comparment"
@@ -133,7 +124,6 @@
 /area/ship/hand/maintenance/engine
 	icon_state = "engine"
 	ambience = HAND_ENG_AMBIENCE
-	req_access = list(access_away_hand)
 
 /area/ship/hand/maintenance/engine/port
 	name = "\improper Port Thruster"
@@ -144,7 +134,7 @@
 #undef HAND_ENG_AMBIENCE
 
 
-/area/ship/hand/command
+/area/ship/hand/command/captain
 	name = "\improper Flight Officers Quarters"
 	icon_state = "bridge"
 	req_access = list(access_away_hand_captain)
@@ -161,4 +151,3 @@
 /area/ship/hand/airlock
 	name = "\improper External Airlock"
 	icon_state = "entry_1"
-	req_access = list(access_away_hand)

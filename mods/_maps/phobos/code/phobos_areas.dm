@@ -108,9 +108,9 @@
 	holomap_color = HOLOMAP_AREACOLOR_SECURITY
 
 /area/ship/phobos/security/detective
-	name = "\improper Security - Investigation"
+	name = "\improper Security - Security Lieutenant"
 	icon_state = "security"
-	req_access = list(access_away_phobos, access_away_phobos_security)
+	req_access = list(access_away_phobos, access_away_phobos_armory)
 	holomap_color = HOLOMAP_AREACOLOR_SECURITY
 
 /area/ship/phobos/security/equipment

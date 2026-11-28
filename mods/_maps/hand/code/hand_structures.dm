@@ -1,3 +1,27 @@
+/obj/machinery/power/apc/hand
+	req_access = list(access_away_hand)
+
+/obj/machinery/power/apc/hand/high
+	cell_type = /obj/item/cell/high
+
+/obj/machinery/power/apc/hand/critical
+	is_critical = 1
+
+/obj/machinery/power/apc/hand/critical/high
+	is_critical = 1
+	cell_type = /obj/item/cell/high
+
+/obj/machinery/power/smes/buildable/preset/hand
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/smes_coil/super_capacity = 1,
+		/obj/item/stock_parts/smes_coil = 1
+	)
+	_input_maxed = TRUE
+	_output_maxed = TRUE
+	_input_on = TRUE
+	_output_on = TRUE
+	_fully_charged = TRUE
+
 	///////////
 	//CLOSETS//
 	///////////

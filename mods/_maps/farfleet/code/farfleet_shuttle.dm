@@ -24,7 +24,7 @@
 	shuttle = "SNZ Baydarka"
 	fore_dir = WEST
 	color = "#ff7300"
-	vessel_mass = 1280
+	vessel_mass = 1100
 	vessel_size = SHIP_SIZE_TINY
 
 

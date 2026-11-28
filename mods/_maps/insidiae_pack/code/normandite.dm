@@ -30,6 +30,8 @@
 	vessel_size = SHIP_SIZE_SMALL
 	initial_restricted_waypoints = list(
 		"Mule" = list("nav_normandite_merchant"),
+		"Hyena GM Tug-2" = list("nav_normandite_handtugtwo"), // mods/_maps/hand/code/hand_shuttles.dm
+		"GM Tug" = list("nav_normandite_merchant"),
 		"Utyug" = list("nav_utyug_start")
 		)
 	contact_class = /decl/ship_contact_class/normandite
@@ -231,6 +233,12 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 	name = "Docking Bay"
 	landmark_tag = "nav_normandite_merchant"
 	docking_controller = "merchant_shuttle_normandite"
+
+/obj/shuttle_landmark/nav_normandite/handtugtwo
+	name = "Docking Bay"
+	landmark_tag = "nav_normandite_handtugtwo"
+	docking_controller = "merchant_shuttle_normandite"
+	special_dock_targets = list("Hyena GM Tug-2" = "handtugtwor_shuttle")
 
 // mechs
 

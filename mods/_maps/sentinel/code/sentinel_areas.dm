@@ -38,7 +38,7 @@
 
 
 /area/ship/patrol/crew/kitchen
-	name = "\improper Galley"
+	name = "\improper Mess Hall"
 	icon_state = "kitchen"
 	req_access = list(access_away_cavalry)
 
@@ -151,8 +151,8 @@
 	icon_state = "amaint"
 	req_access = list(access_away_cavalry)
 
-/area/ship/patrol/maintenance/lower/port
-	name = "\improper Maintenance Lower Port"
+/area/ship/patrol/maintenance/lower/fore
+	name = "\improper Maintenance Lower Fore"
 	icon_state = "amaint"
 	req_access = list(access_away_cavalry)
 

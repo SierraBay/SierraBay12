@@ -201,8 +201,6 @@
 	icon_state = "red"
 	req_access = list(access_away_iccgn)
 
-
-
 /area/ship/farfleet/command/bridge
 	name = "\improper Bridge"
 	icon_state = "bridge"

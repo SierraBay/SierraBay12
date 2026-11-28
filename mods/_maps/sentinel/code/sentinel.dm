@@ -8,7 +8,7 @@
 	desc = "SCGF Cobra-class Patrol Craft. Seconded to Battlegroup Bravo of Fifth Fleet "
 	color = "#990000"
 	fore_dir = WEST
-	vessel_mass = 1000
+	vessel_mass = 15000
 	known_ships = list(/obj/overmap/visitable/ship/landable/reaper)
 	vessel_size = SHIP_SIZE_SMALL
 	start_x = 1
@@ -53,6 +53,15 @@
 	area_usage_test_exempted_areas = list(
 		/area/turbolift/sentinel_first,
 		/area/turbolift/sentinel_second
+	)
+	apc_test_exempt_areas = list(
+		/area/ship/patrol/maintenance/lower/fore = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/engineering/shield = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/engine/starboard = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/engine/port = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/upper/port = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/upper/aft = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/upper/starboard = NO_SCRUBBER|NO_VENT
 	)
 
 /obj/shuttle_landmark/nav_patrol/nav1

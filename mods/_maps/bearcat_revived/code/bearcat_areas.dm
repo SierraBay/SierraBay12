@@ -1,6 +1,7 @@
 /area/ship/scrap
 	name = "Generic Ship"
 	ambience = list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg')
+	req_access = list(access_bearcat)
 
 /area/ship/scrap/crew
 	name = "Crew Compartements"
@@ -97,7 +98,6 @@
 /area/ship/scrap/maintenance
 	name = "Maintenance Compartments"
 	icon_state = "amaint"
-	req_access = list(access_bearcat)
 
 /area/ship/scrap/maintenance/hallway
 	name = "Maintenance Corridors"
@@ -153,12 +153,10 @@
 /area/ship/scrap/command/hallway
 	name = "Command Deck"
 	icon_state = "centcom"
-	req_access = list(access_bearcat)
 
 /area/ship/scrap/command/bridge
 	name = "Bridge"
 	icon_state = "bridge"
-	req_access = list(access_bearcat)
 
 /area/ship/scrap/command/captain
 	name = "Captain's Quarters"
@@ -171,17 +169,14 @@
 	ambience = list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/signal.ogg','sound/ambience/sonar.ogg')
 
 /area/ship/scrap/shuttle/lift
-  name = "Cargo Lift"
-  icon_state = "shuttle3"
-  base_turf = /turf/simulated/open
+	name = "Cargo Lift"
+	icon_state = "shuttle3"
+	base_turf = /turf/simulated/open
 
 /area/ship/scrap/shuttle/outgoing
 	name = "Exploration Shuttle"
 	icon_state = "tcomsatcham"
 	area_flags = AREA_FLAG_RAD_SHIELDED
-	req_access = list(access_bearcat)
-
-
 
 /area/ship/scrap/broken1/repaired
 	turfs_airless = FALSE

@@ -3,7 +3,7 @@
 	desc = "Sensors detect an undamaged vessel and a small cloud of debris on the starboard side, no signs of activity."
 	color = "#ad7026"
 	vessel_mass = 17000
-	max_speed = 1/(4 SECONDS)
+	max_speed = 1/(2 SECONDS)
 	burn_delay = 4 SECONDS
 	initial_generic_waypoints = list(
 		"nav_lost_truck_1",
@@ -25,7 +25,7 @@
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/ship)
 	apc_test_exempt_areas = list(
-		/area/ship/lost_truck/exterior = NO_SCRUBBER|NO_VENT
+		/area/ship/lost_truck/exterior = NO_SCRUBBER
 	)
 
 

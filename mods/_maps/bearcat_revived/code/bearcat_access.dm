@@ -16,12 +16,6 @@ var/global/const/access_bearcat_captain = "ACCESS_BEARCAT_CAPTAIN" //999
 /obj/item/card/id/bearcat_captain
 	access = list(access_bearcat, access_bearcat_captain)
 
-/obj/machinery/door/airlock/autoname/bearcat
-
-/obj/machinery/door/airlock/autoname/engineering/bearcat
-
-/obj/machinery/door/airlock/autoname/command/bearcat
-
 /obj/structure/closet/secure_closet/engineering_electrical/bearcat
 	req_access = list(access_bearcat)
 

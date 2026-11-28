@@ -25,9 +25,8 @@
 	name = "Liberia"
 	desc = "Vessel with Free Trade Union registration"
 	color = "#8a6642"
-	vessel_mass = 3000
+	vessel_mass = 7000
 	fore_dir = WEST
-	max_speed = 1/(1 SECOND)
 	initial_restricted_waypoints = list(
 		"Mule" = list("nav_mule_start")
 	)

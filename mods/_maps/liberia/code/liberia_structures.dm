@@ -74,3 +74,13 @@
 
 /obj/structure/table/mag/CtrlClick()
 	return TRUE
+
+/obj/machinery/atm/liberia
+	var/ship_name = "FTV Liberia"
+
+/obj/machinery/atm/liberia/mule
+	ship_name = "FTV Mule"
+
+/obj/machinery/atm/liberia/New()
+	..()
+	machine_id = replacetext(machine_id, station_name(), ship_name)

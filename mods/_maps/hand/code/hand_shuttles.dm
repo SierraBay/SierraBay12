@@ -1,3 +1,5 @@
+// GM Tugs
+
 /datum/shuttle/autodock/overmap/graysontug/hand_one
 	name = "Hyena GM Tug-1"
 	dock_target = "handtugone_shuttle"
@@ -21,6 +23,16 @@
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_MIN
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+
+/datum/shuttle/autodock/overmap/graysontug/hand_one/update_docking_target(obj/shuttle_landmark/location)
+	..()
+	if(shuttle_docking_controller && docking_codes)
+		shuttle_docking_controller.docking_codes = docking_codes
+
+/datum/shuttle/autodock/overmap/graysontug/hand_two/update_docking_target(obj/shuttle_landmark/location)
+	..()
+	if(shuttle_docking_controller && docking_codes)
+		shuttle_docking_controller.docking_codes = docking_codes
 
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_one
 	name = "GM Tug Shuttle control console"
@@ -78,16 +90,46 @@
 	name = "Port Tug Dock"
 	landmark_tag = "nav_handtugone_start"
 	docking_controller = "handtugone_port_dock"
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/handtugtwo/start
 	name = "Starboard Tug Dock"
 	landmark_tag = "nav_handtugtwo_start"
 	docking_controller = "handtugtwo_port_dock"
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/obj/shuttle_landmark/handtugone/sierra_fore
+	name = "Dock FORE-0"
+	landmark_tag = "nav_handtugone_sierra_fore"
+	docking_controller = "nuke_shuttle_dock_airlock"
+
+/obj/shuttle_landmark/handtugone/sierra_stbd_one
+	name = "Dock STBD-1"
+	landmark_tag = "nav_handtugone_sierra_stbd_one"
+	docking_controller = "merchant_shuttle_station"
+	special_dock_targets = list("Hyena GM Tug-1" = "handtugoner_shuttle")
+
+/obj/shuttle_landmark/handtugone/sierra_stbd_three
+	name = "Dock STBD-3"
+	landmark_tag = "nav_handtugone_sierra_stbd_three"
+	docking_controller = "admin_shuttle_dock"
+	special_dock_targets = list("Hyena GM Tug-1" = "handtugoner_shuttle")
+
+/obj/shuttle_landmark/handtugtwo/sierra_stbd_one
+	name = "Dock STBD-1"
+	landmark_tag = "nav_handtugtwo_sierra_stbd_one"
+	docking_controller = "merchant_shuttle_station"
+	special_dock_targets = list("Hyena GM Tug-2" = "handtugtwor_shuttle")
+
+/obj/shuttle_landmark/handtugtwo/sierra_stbd_three
+	name = "Dock STBD-3"
+	landmark_tag = "nav_handtugtwo_sierra_stbd_three"
+	docking_controller = "admin_shuttle_dock"
+	special_dock_targets = list("Hyena GM Tug-2" = "handtugtwor_shuttle")
+
+// EE S-class Pods
 
 /datum/shuttle/autodock/overmap/pod_hand_one
 	name = "EE S-class 18-24-1"
+	dock_target = "handpodone"
 	warmup_time = 5
 	current_location = "nav_handpodone_start"
 	range = 2
@@ -99,6 +141,7 @@
 
 /datum/shuttle/autodock/overmap/pod_hand_two
 	name = "EE S-class 18-24-2"
+	dock_target = "handpodtwo"
 	warmup_time = 5
 	current_location = "nav_handpodtwo_start"
 	range = 2
@@ -121,11 +164,10 @@
 	shuttle = "EE S-class 18-24-1"
 	name = "EE S-class 18-24-1"
 	desc = "Einstein Engines S-class pod. Universal takeoff and landing module."
-	max_speed = 1/(2 SECONDS)
 	burn_delay = 1 SECONDS
 	fore_dir = NORTH
 	color = "#e6f7ff"
-	vessel_mass = 500
+	vessel_mass = 400
 	vessel_size = SHIP_SIZE_TINY
 	known_ships = list(
 		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
@@ -138,11 +180,10 @@
 	shuttle = "EE S-class 18-24-2"
 	name = "EE S-class 18-24-2"
 	desc = "Einstein Engines S-class pod. Universal takeoff and landing module."
-	max_speed = 1/(2 SECONDS)
 	burn_delay = 1 SECONDS
 	fore_dir = NORTH
 	color = "#e6f7ff"
-	vessel_mass = 500
+	vessel_mass = 400
 	vessel_size = SHIP_SIZE_TINY
 	known_ships = list(
 		/obj/overmap/visitable/ship/landable/graysontug/hand_one,
@@ -167,10 +208,13 @@
 	name = "Port EE S-class Dock"
 	landmark_tag = "nav_handpodone_start"
 	docking_controller = "handpodone_port_shuttle_dock"
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/pod_hand_two/start
 	name = "Starboard EE S-class Dock"
 	landmark_tag = "nav_handpodtwo_start"
 	docking_controller = "handpodtwo_port_shuttle_dock"
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/obj/shuttle_landmark/pod_hand_one/sierra_fore
+	name = "Dock FORE-0"
+	landmark_tag = "nav_handpodone_sierra_fore"
+	docking_controller = "nuke_shuttle_dock_airlock"

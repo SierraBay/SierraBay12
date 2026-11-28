@@ -5,6 +5,7 @@
 
 	initial_restricted_waypoints = list(
 		"Mule" = list("nav_gas_station_port_a"),
+		"IPV Celeste Hauler" = list("nav_gas_station_port_a1"),
 		"Hyena GM Tug-2" = list("nav_gas_station_port_b"),
 		"Exploration Shuttle" = list("nav_gas_station_port_c"),
 		"Reaper Gunboat" = list("nav_gas_station_port_d"),
@@ -41,6 +42,11 @@
 /obj/shuttle_landmark/nav_gas_station/port_a // mule
 	name = "Dock Port A"
 	landmark_tag = "nav_gas_station_port_a"
+	docking_controller = "gas_station_port_a"
+
+/obj/shuttle_landmark/nav_gas_station/port_a1 // celestehauler
+	name = "Dock Port A"
+	landmark_tag = "nav_gas_station_port_a1"
 	docking_controller = "gas_station_port_a"
 
 /obj/shuttle_landmark/nav_gas_station/port_b // hand tug 2

@@ -14,7 +14,7 @@
 	name = "light freighter"
 	color = "#00ffff"
 	vessel_mass = 19000 //было 20000, 1000 в пользу шаттла ушло
-	max_speed = 1/(5 SECONDS) //соответствие параметру ниже
+	max_speed = 1/(3 SECONDS)
 	burn_delay = 5 SECONDS //было 10 секунд. нерезонно огромный кд для ускорения трастеров
 	initial_restricted_waypoints = list(
 		"Exploration Shuttle" = list("nav_bearcat_port_dock_shuttle"),
@@ -57,7 +57,6 @@
 		/area/ship/scrap/crew/hallway/starboard= NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/maintenance/hallway = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/maintenance/lower = NO_SCRUBBER|NO_VENT,
-		/area/ship/scrap/maintenance/atmos = NO_SCRUBBER,
 		/area/ship/scrap/escape_port = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/escape_star = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/shuttle/lift = NO_SCRUBBER|NO_VENT|NO_APC,
@@ -141,10 +140,12 @@
 	locked = 0
 	coverlocked = 0
 
-/obj/machinery/door/airlock/autoname/command
+/obj/machinery/door/airlock/autoname/bearcat
+
+/obj/machinery/door/airlock/autoname/bearcat/command/
 	door_color = COLOR_COMMAND_BLUE
 
-/obj/machinery/door/airlock/autoname/engineering
+/obj/machinery/door/airlock/autoname/bearcat/engineering/
 	door_color = COLOR_AMBER
 
 /obj/landmark/deadcap
