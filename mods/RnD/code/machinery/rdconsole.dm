@@ -768,6 +768,16 @@
 	to_chat(user, SPAN_WARNING("Фотография не соответствует целям выбранного контракта."))
 
 
+/proc/get_rnd_possible_design_icons(list/possible_designs)
+	if(!length(possible_designs))
+		return
+	var/list/design_icons = list()
+	for(var/list/dentry in possible_designs)
+		var/list/dinfo = dentry["data"]
+		if(islist(dinfo) && dinfo["icon"])
+			design_icons |= dinfo["icon"]
+	return design_icons
+
 /obj/machinery/computer/rdconsole/proc/get_possible_designs_data(obj/machinery/fabricator/rnd/target_machine, category) // Builds the design list for the UI
 	var/obj/machinery/r_n_d/server/S_gpd = get_server()
 	if(!S_gpd)
@@ -1292,12 +1302,14 @@
 		data["can_compile"] = (report_delta > 0)
 		data["report_collapsed"] = report_collapsed
 
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
+	var/list/design_icons = get_rnd_possible_design_icons(data["possible_designs"])
+
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, new_assets = design_icons)
 	if (!ui)
 		ui = new(user, src, ui_key, "mods-rdconsole.tmpl", "R&D Console", 1200, 700)
 
 		ui.set_initial_data(data)
-		ui.open()
+		ui.open(design_icons)
 		ui.set_auto_update(1)
 
 /obj/machinery/computer/rdconsole/robotics

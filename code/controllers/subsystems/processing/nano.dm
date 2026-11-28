@@ -18,13 +18,13 @@ PROCESSING_SUBSYSTEM_DEF(nano)
   *
   * @return /nanoui Returns the found ui, for null if none exists
   */
-/datum/controller/subsystem/processing/nano/proc/try_update_ui(mob/user, src_object, ui_key, datum/nanoui/ui, data, force_open = 0)
+/datum/controller/subsystem/processing/nano/proc/try_update_ui(mob/user, src_object, ui_key, datum/nanoui/ui, data, force_open = 0, list/new_assets)
 	if (!ui) // no ui has been passed, so we'll search for one
 		ui = get_open_ui(user, src_object, ui_key)
 	if (!ui)
 		return
 	// The UI is already open
-	force_open ? ui.reinitialise(new_initial_data=data) : ui.push_data(data)
+	force_open ? ui.reinitialise(new_initial_data = data, new_assets = new_assets) : ui.push_data(data, new_assets = new_assets)
 	return ui
 
  /**
@@ -127,19 +127,18 @@ PROCESSING_SUBSYSTEM_DEF(nano)
 			.++
 
  /**
-  * Add a /nanoui ui to the list of open uis
+  * Register a NanoUI before sending assets so updates and closes can find it.
   * This is called by the /nanoui open() proc
   *
   * @param ui /nanoui The ui to add
   *
   * @return nothing
   */
-/datum/controller/subsystem/processing/nano/proc/ui_opened(datum/nanoui/ui)
+/datum/controller/subsystem/processing/nano/proc/ui_opening(datum/nanoui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
 	LAZYINITLIST(open_uis[src_object_key])
 	LAZYDISTINCTADD(open_uis[src_object_key][ui.ui_key], ui)
 	LAZYDISTINCTADD(ui.user.open_uis, ui)
-	START_PROCESSING(SSnano, ui)
 
  /**
   * Remove a /nanoui ui from the list of open uis
@@ -154,7 +153,8 @@ PROCESSING_SUBSYSTEM_DEF(nano)
 	if (!open_uis[src_object_key] || !open_uis[src_object_key][ui.ui_key])
 		return 0 // wasn't open
 
-	STOP_PROCESSING(SSnano, ui)
+	if(ui.is_processing)
+		STOP_PROCESSING(SSnano, ui)
 	if(ui.user)	// Sanity check in case a user has been deleted (say a blown up borg watching the alarm interface)
 		LAZYREMOVE(ui.user.open_uis, ui)
 	open_uis[src_object_key][ui.ui_key] -= ui

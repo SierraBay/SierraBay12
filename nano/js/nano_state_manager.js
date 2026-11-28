@@ -15,6 +15,12 @@ NanoStateManager = function () { // Renders templates from server data.
     if (_data['config'].hasOwnProperty('stateKey') && _data['config']['stateKey'])
       stateKey = _data['config']['stateKey'].toLowerCase()
     NanoStateManager.setCurrentState(stateKey)
+    window._nanoReadyForUpdates = true
+    if (window._pendingNanoUpdates && window._pendingNanoUpdates.length) {
+      var queued = window._pendingNanoUpdates.splice(0, window._pendingNanoUpdates.length)
+      for (var i = 0; i < queued.length; i++)
+        receiveUpdateData(queued[i])
+    }
     $(document).on('templatesLoaded', function () {
       doUpdate(_data)
       _isInitialised = true
@@ -31,7 +37,7 @@ NanoStateManager = function () { // Renders templates from server data.
       alert("recieveUpdateData failed. " + "<br>Error name: " + error.name + "<br>Error Message: " + error.message)
       return
     }
-    if (!updateData.hasOwnProperty('data'))
+    if (!updateData.hasOwnProperty('data') || updateData['data'] == null)
       if (_data && _data.hasOwnProperty('data'))
         updateData['data'] = _data['data']
       else
