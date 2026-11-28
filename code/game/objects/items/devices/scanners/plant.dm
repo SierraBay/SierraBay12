@@ -10,7 +10,8 @@
 	var/static/list/valid_targets = list(
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/machinery/portable_atmospherics/hydroponics,
-		/obj/item/seeds
+		/obj/item/seeds,
+		/obj/item/plant_pot
 	)
 //[SIERRA-ADD] - MODPACK_RND
 	var/potency
@@ -51,7 +52,13 @@
 		grown_seed = H.seed
 		grown_reagents = H.reagents
 
+	else if(istype(target, /obj/item/plant_pot))
+		var/obj/item/plant_pot/pot = target
+		grown_seed = pot.seed
+
 	if(!grown_seed)
+		if(istype(target, /obj/item/plant_pot) || istype(target, /obj/machinery/portable_atmospherics/hydroponics/plantpot))
+			return "The pot is empty."
 		return
 
 	if(grown_seed.mysterious && !grown_seed.scanned)
@@ -183,6 +190,17 @@
 
 	if(grown_seed.get_trait(TRAIT_TELEPORTING))
 		dat += "<br>The fruit is temporal/spatially unstable."
+
+	var/plant_colour = grown_seed.get_trait(TRAIT_PLANT_COLOUR)
+	var/product_colour = grown_seed.get_trait(TRAIT_PRODUCT_COLOUR)
+	var/leaves_colour = grown_seed.get_trait(TRAIT_LEAVES_COLOUR)
+	dat += "<br>Pigment gene ([SSplants.gene_tag_masks[GENE_PIGMENT] || "N/A"]). "
+	if(istext(plant_colour))
+		dat += "Foliage is [SPAN_COLOR(plant_colour, plant_colour)]. "
+	if(istext(product_colour))
+		dat += "Fruit is [SPAN_COLOR(product_colour, product_colour)]. "
+	if(istext(leaves_colour))
+		dat += "Leaves are [SPAN_COLOR(leaves_colour, leaves_colour)]."
 
 	if(grown_seed.get_trait(TRAIT_EXUDE_GASSES))
 		dat += "<br>It will release gas into the environment."

@@ -48,11 +48,16 @@
 	if(hat)
 		unEquip(hat)
 
+	drop_guided_vine()
 	jump_to_next_nymph()
 
 	remove_from_list()
 
-	return ..(gibbed,death_msg)
+	. = ..(gibbed, death_msg)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/host = loc
+		if(host.species?.name == SPECIES_DIONA)
+			host.sync_nymph_expression()
 
 /mob/living/carbon/alien/diona/Destroy()
 	if (previous_nymph || next_nymph)

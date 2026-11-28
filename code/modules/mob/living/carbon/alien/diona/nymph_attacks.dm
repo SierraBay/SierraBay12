@@ -39,8 +39,13 @@
 
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
+	if(handle_guided_vine_click(A))
+		return
+
 	if(istype(loc, /obj/structure/diona_gestalt))
 		var/obj/structure/diona_gestalt/gestalt = loc
+		if(a_intent == I_HURT && ismob(A))
+			express_contact(A)
 		return gestalt.handle_member_click(src, A)
 	else
 
@@ -76,12 +81,17 @@
 
 	if(istype(A, /mob))
 		if(src != A && !gestalt_with(A))
+			if(a_intent == I_HURT)
+				express_contact(A)
 			visible_message(SPAN_NOTICE("\The [src] butts its head into \the [A]."))
 		return
 
 	. = ..()
 
 /mob/living/carbon/alien/diona/RangedAttack(atom/A, params)
+	if(handle_guided_vine_click(A))
+		setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+		return TRUE
 	if((a_intent == I_HURT || a_intent == I_GRAB) && holding_item)
 		setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		visible_message(SPAN_DANGER("\The [src] spits \a [holding_item] at \the [A]!"))
@@ -117,6 +127,8 @@
 
 	if(tray.weedlevel || tray.pestlevel)
 		reagents.add_reagent(/datum/reagent/nutriment/glucose, (tray.weedlevel + tray.pestlevel))
+		if(genome?.parasite && tray.weedlevel)
+			adjust_nutrition(tray.weedlevel * 5)
 		tray.weedlevel = 0
 		tray.pestlevel = 0
 		visible_message(SPAN_NOTICE("<b>\The [src]</b> begins rooting through \the [tray], ripping out pests and weeds, and eating them noisily."),SPAN_NOTICE("You begin rooting through \the [tray], ripping out pests and weeds, and eating them noisily."))

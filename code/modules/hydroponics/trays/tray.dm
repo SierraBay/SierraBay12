@@ -415,6 +415,10 @@
 	return
 
 /obj/machinery/portable_atmospherics/hydroponics/use_tool(obj/item/O, mob/living/user, list/click_params)
+	if(istype(O, /obj/item/plant_pot))
+		var/obj/item/plant_pot/pot = O
+		return pot.transplant_from(src, user)
+
 	if (O.is_open_container())
 		return FALSE
 
