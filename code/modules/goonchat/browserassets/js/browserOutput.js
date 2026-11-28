@@ -72,12 +72,6 @@ function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
 }
 
-function outerHTML(el) {
-    var wrap = document.createElement('div');
-    wrap.appendChild(el.cloneNode(true));
-    return wrap.innerHTML;
-}
-
 //Polyfill for fucking date now because of course IE8 and below don't support it
 if (!Date.now) {
 	Date.now = function now() {
@@ -176,56 +170,73 @@ function replaceRegex() {
 	$(this).removeAttr('replaceRegex');
 }
 
-//Actually turns the highlight term match into appropriate html
-function addHighlightMarkup(match) {
-	var extra = '';
-	if (opts.highlightColor) {
-		extra += ' style="background-color: '+opts.highlightColor+'"';
-	}
-	return '<span class="highlight"'+extra+'>'+match+'</span>';
+function isHighlightColor(color) {
+	return /^#(?:[0-9a-f]{3,4}|[0-9a-f]{6})$/i.test(color);
 }
 
-//Highlights words based on user settings
-function highlightTerms(el) {
-	if (el.children.length > 0) {
-		for(var h = 0; h < el.children.length; h++){
-			highlightTerms(el.children[h]);
+function highlightTextNodes(el, patterns) {
+	// Walk backwards because replacing a text node can add several children.
+	for (var i = el.childNodes.length - 1; i >= 0; i--) {
+		var child = el.childNodes[i];
+		if (child.nodeType === 1) {
+			if (!/^(script|style|textarea|title)$/i.test(child.nodeName)) {
+				highlightTextNodes(child, patterns);
+			}
+		} else if (child.nodeType === 3) {
+			highlightTextNode(child, patterns);
 		}
 	}
+}
 
-	var hasTextNode = false;
-	for (var node = 0; node < el.childNodes.length; node++)
-	{
-		if (el.childNodes[node].nodeType === 3)
-		{
-			hasTextNode = true;
+function highlightTextNode(node, patterns) {
+	var text = node.data;
+	var words = /[^ ]+/g;
+	var word;
+	var fragment;
+	var start = 0;
+
+	while ((word = words.exec(text)) !== null) {
+		// The first matching term takes precedence within each word.
+		for (var i = 0; i < patterns.length; i++) {
+			var pattern = patterns[i];
+			pattern.lastIndex = 0;
+			var match = pattern.exec(word[0]);
+			if (!match) {
+				continue;
+			}
+			if (!fragment) {
+				fragment = document.createDocumentFragment();
+			}
+			do {
+				var index = word.index + match.index;
+				fragment.appendChild(document.createTextNode(text.substring(start, index)));
+				var highlight = document.createElement('span');
+				highlight.className = 'highlight';
+				highlight.style.backgroundColor = opts.highlightColor;
+				highlight.appendChild(document.createTextNode(match[0]));
+				fragment.appendChild(highlight);
+				start = index + match[0].length;
+			} while ((match = pattern.exec(word[0])) !== null);
 			break;
 		}
 	}
 
-	if (hasTextNode) { //If element actually has text
-		var newText = '';
-		for (var c = 0; c < el.childNodes.length; c++) { //Each child element
-			if (el.childNodes[c].nodeType === 3) { //Is it text only?
-				var words = el.childNodes[c].data.split(' ');
-				for (var w = 0; w < words.length; w++) { //Each word in the text
-					var newWord = null;
-					for (var i = 0; i < opts.highlightTerms.length; i++) { //Each highlight term
-						if (opts.highlightTerms[i] && words[w].toLowerCase().indexOf(opts.highlightTerms[i].toLowerCase()) > -1) { //If a match is found
-							newWord = words[w].replace("<", "&lt;").replace(new RegExp(opts.highlightTerms[i], 'gi'), addHighlightMarkup);
-							break;
-						}
-						if (window.console)
-							console.log(newWord)
-					}
-					newText += newWord || words[w].replace("<", "&lt;");
-					newText += w >= words.length ? '' : ' ';
-				}
-			} else { //Every other type of element
-				newText += outerHTML(el.childNodes[c]);
-			}
+	if (fragment) {
+		fragment.appendChild(document.createTextNode(text.substring(start)));
+		node.parentNode.replaceChild(fragment, node);
+	}
+}
+
+function highlightTerms(el) {
+	var patterns = [];
+	for (var i = 0; i < opts.highlightTerms.length; i++) {
+		var term = opts.highlightTerms[i];
+		if (term) {
+			patterns.push(new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'));
 		}
-		el.innerHTML = newText;
+	}
+	if (patterns.length) {
+		highlightTextNodes(el, patterns);
 	}
 }
 
@@ -730,20 +741,27 @@ $(function() {
 		internalOutput('<span class="internal boldnshit">Loaded ping display of: '+(opts.pingDisabled ? 'hidden' : 'visible')+'</span>', 'internal');
 	}
 	if (savedConfig.shighlightTerms) {
-		var savedTerms = $.parseJSON(savedConfig.shighlightTerms);
-		var actualTerms = '';
-		for (var i = 0; i < savedTerms.length; i++) {
-			if (savedTerms[i]) {
-				actualTerms += savedTerms[i] + ', ';
+		var savedTerms;
+		try {
+			savedTerms = $.parseJSON(savedConfig.shighlightTerms);
+		} catch (error) {
+			savedTerms = [];
+		}
+		if ($.isArray(savedTerms)) {
+			var actualTerms = [];
+			for (var i = 0; i < opts.highlightLimit && i < savedTerms.length; i++) {
+				if (typeof savedTerms[i] === 'string' && savedTerms[i]) {
+					opts.highlightTerms[i] = savedTerms[i];
+					actualTerms.push(savedTerms[i]);
+				}
+			}
+			if (actualTerms.length) {
+				var termsText = actualTerms.join(', ').replace(/&/g, '&amp;').replace(/</g, '&lt;');
+				internalOutput('<span class="internal boldnshit">Loaded highlight strings of: ' + termsText + '</span>', 'internal');
 			}
 		}
-		if (actualTerms) {
-			actualTerms = actualTerms.substring(0, actualTerms.length - 2);
-			internalOutput('<span class="internal boldnshit">Loaded highlight strings of: ' + actualTerms+'</span>', 'internal');
-			opts.highlightTerms = savedTerms;
-		}
 	}
-	if (savedConfig.shighlightColor) {
+	if (isHighlightColor(savedConfig.shighlightColor)) {
 		opts.highlightColor = savedConfig.shighlightColor;
 		internalOutput('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
 	}
@@ -1042,25 +1060,29 @@ $(function() {
 		if ($('.popup .highlightTerm').is(':visible')) {return;}
 		var termInputs = '';
 		for (var i = 0; i < opts.highlightLimit; i++) {
-			termInputs += '<div><input type="text" name="highlightTermInput'+i+'" id="highlightTermInput'+i+'" class="highlightTermInput'+i+'" maxlength="255" value="'+(opts.highlightTerms[i] ? opts.highlightTerms[i] : '')+'" /></div>';
+			termInputs += '<div><input type="text" name="highlightTermInput'+i+'" id="highlightTermInput'+i+'" class="highlightTermInput'+i+'" maxlength="255" /></div>';
 		}
 		var popupContent = '<div class="head">String Highlighting</div>' +
 			'<div class="highlightPopup" id="highlightPopup">' +
 				'<div>Choose up to '+opts.highlightLimit+' strings that will highlight the line when they appear in chat.</div>' +
 				'<form id="highlightTermForm">' +
 					termInputs +
-					'<div><input type="text" name="highlightColor" id="highlightColor" class="highlightColor" '+
-						'style="background-color: '+(opts.highlightColor ? opts.highlightColor : '#FFFF00')+'" value="'+(opts.highlightColor ? opts.highlightColor : '#FFFF00')+'" maxlength="7" /></div>' +
+					'<div><input type="text" name="highlightColor" id="highlightColor" class="highlightColor" maxlength="7" /></div>' +
 					'<div><input type="submit" name="highlightTermSubmit" id="highlightTermSubmit" class="highlightTermSubmit" value="Save" /></div>' +
 				'</form>' +
 			'</div>';
 		createPopup(popupContent, 250);
+		var $popup = $('#popup'+opts.popups);
+		for (var i = 0; i < opts.highlightLimit; i++) {
+			$popup.find('#highlightTermInput'+i).val(opts.highlightTerms[i] || '');
+		}
+		$popup.find('#highlightColor').val(opts.highlightColor).css('background-color', opts.highlightColor);
 	});
 
 	$('body').on('keyup', '#highlightColor', function() {
 		var color = $('#highlightColor').val();
 		color = color.trim();
-		if (!color || color.charAt(0) != '#') return;
+		if (!isHighlightColor(color)) return;
 		$('#highlightColor').css('background-color', color);
 	});
 
@@ -1085,7 +1107,7 @@ $(function() {
 
 		var color = $('#highlightColor').val();
 		color = color.trim();
-		if (color == '' || color.charAt(0) != '#') {
+		if (!isHighlightColor(color)) {
 			opts.highlightColor = '#FFFF00';
 		} else {
 			opts.highlightColor = color;
