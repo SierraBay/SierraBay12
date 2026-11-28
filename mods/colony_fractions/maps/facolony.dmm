@@ -117,11 +117,13 @@
 	dir = 4;
 	locked = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "facolony4_entryairlock";
 	name = "Landing Site Entry Blasts"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/outsidewarehouse)
@@ -252,6 +254,14 @@
 /obj/random/trash,
 /obj/structure/catwalk,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/button/blast_door{
+	pixel_x = -24;
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts";
+	req_access = list("ACCESS_FACOLONY");
+	dir = 4;
+	pixel_y = -6
+	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "bj" = (
@@ -416,7 +426,7 @@
 /obj/wallframe_spawn/reinforced,
 /obj/paint/brown,
 /obj/machinery/door/blast/shutters{
-	name = "Fore-Port Cargo Shutters";
+	name = "Fore Cargo Shutters";
 	id_tag = "facolony_foreport_blasts"
 	},
 /turf/simulated/floor/plating,
@@ -893,13 +903,6 @@
 	pixel_y = 34;
 	pixel_x = 6;
 	master_tag = "facolony3";
-	req_access = list("ACCESS_FACOLONY")
-	},
-/obj/machinery/button/blast_door{
-	id_tag = "facolony3_entryairlock";
-	name = "North Entrance Blasts";
-	pixel_x = 6;
-	pixel_y = 24;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/decal/cleanable/dirt,
@@ -1820,7 +1823,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/blast/shutters{
 	id_tag = "facolony_aftport_blasts";
-	name = "Aft-Port Cargo Shutters"
+	name = "Aft Cargo Shutters"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/atmospherics)
@@ -2002,21 +2005,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/medbay)
-"iu" = (
-/obj/floor_decal/industrial/warning/dust{
-	dir = 8
-	},
-/obj/decal/cleanable/dirt,
-/obj/machinery/button/blast_door{
-	pixel_x = 24;
-	id_tag = "facolony5_entryairlock";
-	name = "Connector Blasts Lockdown";
-	req_access = list("ACCESS_FACOLONY");
-	dir = 8;
-	pixel_y = 6
-	},
-/turf/simulated/floor/reinforced,
-/area/map_template/facolony/airlock)
 "iw" = (
 /obj/machinery/suit_cycler{
 	req_access = list()
@@ -2807,10 +2795,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 5
 	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	id_tag = "facolony5_pump_out_external";
-	dir = 4
-	},
 /turf/simulated/floor/away,
 /area/map_template/facolony/outsidewarehouse)
 "lU" = (
@@ -3142,7 +3126,7 @@
 	},
 /obj/machinery/door/blast/shutters{
 	id_tag = "facolony_aftport_blasts";
-	name = "Aft-Port Cargo Shutters"
+	name = "Aft Cargo Shutters"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/atmospherics)
@@ -3382,14 +3366,6 @@
 	pixel_y = -34;
 	pixel_x = 6;
 	master_tag = "facolony2";
-	req_access = list("ACCESS_FACOLONY")
-	},
-/obj/machinery/button/blast_door{
-	id_tag = "facolony2_entryairlock";
-	name = "South Entrance Blasts";
-	dir = 1;
-	pixel_x = 6;
-	pixel_y = -24;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/light/small,
@@ -3777,8 +3753,8 @@
 /obj/wallframe_spawn/reinforced,
 /obj/paint/brown,
 /obj/machinery/door/blast/shutters{
-	id_tag = "facolony_forestar_blasts";
-	name = "Fore-Starboard Cargo Shutters"
+	name = "Fore Cargo Shutters";
+	id_tag = "facolony_foreport_blasts"
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/medbay)
@@ -4097,11 +4073,6 @@
 	dir = 6
 	},
 /obj/catwalk_plated,
-/obj/machinery/atmospherics/binary/pump/on{
-	dir = 8;
-	target_pressure = 400;
-	name = "Chamber Output"
-	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
 "qw" = (
@@ -4591,7 +4562,7 @@
 	pixel_y = -6;
 	pixel_x = 6;
 	id_tag = "facolony5_entryairlock";
-	name = "Connector Blasts Lockdown";
+	name = "Connector Blasts";
 	dir = 8
 	},
 /obj/machinery/button/blast_door{
@@ -4601,23 +4572,18 @@
 	name = "General Window Shields";
 	dir = 8
 	},
-/obj/machinery/button/blast_door{
-	id_tag = "facolony3_entryairlock";
-	name = "North Entrance Blasts";
-	pixel_x = -4;
-	pixel_y = 6;
-	dir = 8
-	},
-/obj/machinery/button/blast_door{
-	id_tag = "facolony2_entryairlock";
-	name = "South Entrance Blasts";
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = -6
-	},
 /obj/item/device/radio/intercom{
 	dir = 8;
 	pixel_x = 22
+	},
+/obj/item/shield_diffuser{
+	pixel_y = -2;
+	pixel_x = -6
+	},
+/obj/item/clothing/head/cowboy_hat{
+	pixel_y = 10;
+	pixel_x = -3;
+	desc = "A wide-brimmed hat, in the prevalent style of America's frontier period."
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
@@ -4716,10 +4682,10 @@
 	req_access = list()
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/blast/regular/open{
+/obj/machinery/door/blast/regular{
 	id_tag = "facolony5_entryairlock";
-	dir = 4;
-	name = "Connector Blasts"
+	name = "Connector Blasts";
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
@@ -4879,8 +4845,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/regular{
-	id_tag = "facolony2_entryairlock";
-	name = "South Entrance Blasts"
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
@@ -5279,8 +5245,8 @@
 	pixel_x = -8
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "facolony3_entryairlock";
-	name = "North Entrance Blasts";
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts";
 	pixel_x = 6;
 	pixel_y = -24;
 	req_access = list("ACCESS_FACOLONY");
@@ -5452,16 +5418,8 @@
 /obj/machinery/button/blast_door{
 	dir = 1;
 	pixel_y = -34;
-	pixel_x = 6;
-	name = "Aft-Starboard Cargo Shutters";
-	id_tag = "facolony_aftstar_blasts";
-	req_access = list("ACCESS_FACOLONY")
-	},
-/obj/machinery/button/blast_door{
-	dir = 1;
-	pixel_y = -34;
 	pixel_x = -6;
-	name = "Aft-Port Cargo Shutters";
+	name = "Aft Cargo Shutters";
 	id_tag = "facolony_aftport_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -5469,16 +5427,8 @@
 	dir = 1;
 	pixel_y = -24;
 	pixel_x = -6;
-	name = "Fore-Port Cargo Shutters";
+	name = "Fore Cargo Shutters";
 	id_tag = "facolony_foreport_blasts";
-	req_access = list("ACCESS_FACOLONY")
-	},
-/obj/machinery/button/blast_door{
-	dir = 1;
-	pixel_y = -24;
-	pixel_x = 6;
-	name = "Fore-Starboard Cargo Shutters";
-	id_tag = "facolony_forestar_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/structure/table/steel_reinforced,
@@ -5512,6 +5462,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/blue,
+/obj/machinery/atmospherics/binary/pump/on{
+	dir = 8;
+	target_pressure = 400;
+	name = "Air Supply"
+	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
@@ -5690,8 +5645,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/regular{
-	id_tag = "facolony3_entryairlock";
-	name = "North Entrance Blasts"
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
@@ -5708,8 +5663,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/regular{
-	id_tag = "facolony2_entryairlock";
-	name = "South Entrance Blasts"
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
@@ -5750,8 +5705,8 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/shutters{
-	name = "Aft-Starboard Cargo Shutters";
-	id_tag = "facolony_aftstar_blasts"
+	id_tag = "facolony_aftport_blasts";
+	name = "Aft Cargo Shutters"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo)
@@ -6492,8 +6447,8 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/glass/medical,
 /obj/machinery/door/blast/shutters{
-	id_tag = "facolony_forestar_blasts";
-	name = "Fore-Starboard Cargo Shutters"
+	name = "Fore Cargo Shutters";
+	id_tag = "facolony_foreport_blasts"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/medbay)
@@ -6644,12 +6599,12 @@
 	id_tag = "facolony3_exterior_door";
 	locked = 1
 	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/regular{
-	id_tag = "facolony3_entryairlock";
-	name = "North Entrance Blasts"
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts"
 	},
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
 "zX" = (
@@ -6851,8 +6806,8 @@
 	pixel_x = -8
 	},
 /obj/machinery/button/blast_door{
-	id_tag = "facolony2_entryairlock";
-	name = "South Entrance Blasts";
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts";
 	pixel_x = 6;
 	pixel_y = 24;
 	req_access = list("ACCESS_FACOLONY")
@@ -7493,7 +7448,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/blast/shutters{
 	id_tag = "facolony_aftport_blasts";
-	name = "Aft-Port Cargo Shutters"
+	name = "Aft Cargo Shutters"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/atmospherics)
@@ -8539,6 +8494,14 @@
 /obj/decal/cleanable/blood/oil,
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
+/obj/machinery/button/blast_door{
+	dir = 1;
+	pixel_y = -24;
+	pixel_x = 6;
+	name = "Aft Airlock Blasts";
+	id_tag = "facolony_aft_exit_blasts";
+	req_access = list("ACCESS_FACOLONY")
+	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo2)
 "IB" = (
@@ -8962,11 +8925,6 @@
 	pixel_y = 8;
 	pixel_x = -2
 	},
-/obj/item/clothing/head/cowboy_hat{
-	pixel_y = 14;
-	pixel_x = -3;
-	desc = "A wide-brimmed hat, in the prevalent style of America's frontier period."
-	},
 /obj/random/drinkbottle{
 	pixel_y = 15;
 	pixel_x = 8
@@ -8978,10 +8936,6 @@
 /obj/item/device/radio/intercom/map_preset/facolony{
 	dir = 8;
 	pixel_x = 22
-	},
-/obj/item/shield_diffuser{
-	pixel_y = 2;
-	pixel_x = -6
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
@@ -9451,7 +9405,7 @@
 /obj/wallframe_spawn/reinforced,
 /obj/paint/brown,
 /obj/machinery/door/blast/shutters{
-	name = "Fore-Port Cargo Shutters";
+	name = "Fore Cargo Shutters";
 	id_tag = "facolony_foreport_blasts"
 	},
 /turf/simulated/floor/plating,
@@ -9768,9 +9722,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden{
-	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/outsidewarehouse)
@@ -11644,11 +11595,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	id_tag = "facolony5_pump_out_internal";
-	power_rating = 25000;
-	dir = 8
-	},
 /turf/simulated/floor/away,
 /area/map_template/facolony/outsidewarehouse)
 "UB" = (
@@ -12260,17 +12206,20 @@
 /turf/simulated/floor/wood/bamboo,
 /area/map_template/facolony/messhall)
 "Xr" = (
-/obj/machinery/door/firedoor{
-	req_access = list()
+/obj/floor_decal/industrial/warning/dust{
+	dir = 8
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/blast/shutters{
-	name = "Aft-Starboard Cargo Shutters";
-	id_tag = "facolony_aftstar_blasts"
+/obj/machinery/button/blast_door{
+	pixel_x = 24;
+	id_tag = "facolony5_entryairlock";
+	name = "Connector Blasts";
+	req_access = list("ACCESS_FACOLONY");
+	dir = 8;
+	pixel_y = -6
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/facolony/cargo)
+/turf/simulated/floor/reinforced,
+/area/map_template/facolony/airlock)
 "Xt" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -12304,14 +12253,6 @@
 	pixel_x = 6;
 	name = "Deck Window Shields";
 	id_tag = "facolony_deck_blasts";
-	req_access = list("ACCESS_FACOLONY")
-	},
-/obj/machinery/button/blast_door{
-	dir = 1;
-	pixel_y = -34;
-	pixel_x = 6;
-	name = "Aft Airlock Blasts";
-	id_tag = "facolony_aft_exit_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -12512,10 +12453,10 @@
 /obj/machinery/door/airlock/multi_tile/facolony/glass{
 	dir = 8
 	},
-/obj/machinery/door/blast/regular/open{
+/obj/machinery/door/blast/regular{
 	id_tag = "facolony5_entryairlock";
-	dir = 4;
-	name = "Connector Blasts"
+	name = "Connector Blasts";
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
@@ -12697,14 +12638,6 @@
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
-/obj/machinery/button/blast_door{
-	pixel_x = -24;
-	id_tag = "facolony5_entryairlock";
-	name = "Connector Blasts Lockdown";
-	req_access = list("ACCESS_FACOLONY");
-	dir = 4;
-	pixel_y = 6
-	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/airlock)
 "ZH" = (
@@ -12771,11 +12704,11 @@
 	req_access = list()
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/blast/shutters{
-	name = "Aft-Starboard Cargo Shutters";
-	id_tag = "facolony_aftstar_blasts"
-	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/door/blast/shutters{
+	id_tag = "facolony_aftport_blasts";
+	name = "Aft Cargo Shutters"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo)
 
@@ -13749,7 +13682,7 @@ Ta
 cO
 Lk
 Pu
-Xr
+ZX
 Yp
 GP
 GP
@@ -13959,10 +13892,10 @@ uo
 uo
 Kn
 Ib
-VN
+Xr
 VN
 Uk
-iu
+VN
 II
 Kn
 jI

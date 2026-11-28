@@ -16,5 +16,6 @@
 #include "code/spy_station.dm"
 #include "code/transshipment.dm"
 #include "code/voxraider.dm"
+#include "code/yacht.dm"
 
 #endif

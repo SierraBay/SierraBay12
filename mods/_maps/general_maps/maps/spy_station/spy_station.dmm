@@ -3282,21 +3282,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/spy_station/solar)
-"SD" = (
-/obj/structure/lattice,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/airless,
-/area/spy_station/solar)
 "SG" = (
 /obj/structure/mattress,
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -10628,7 +10613,7 @@ Ur
 kt
 Hb
 fs
-SD
+Ur
 Wz
 rU
 rU

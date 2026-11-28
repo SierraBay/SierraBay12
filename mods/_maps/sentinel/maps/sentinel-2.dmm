@@ -164,26 +164,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
-"as" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/starboard)
 "at" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -246,12 +226,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper)
 "az" = (
-/obj/machinery/power/apc{
-	name = "south bump";
-	pixel_y = -24;
-	req_access = list("ACCESS_CAVALRY")
-	},
-/obj/structure/cable,
 /obj/structure/railing/mapped{
 	dir = 1
 	},
@@ -1745,10 +1719,7 @@
 	name = "Armory Shutters"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/window/northleft{
-	dir = 2;
-	req_access = list("ACCESS_CAVALRY_EMERG_ARMORY")
-	},
+/obj/machinery/door/window/holowindoor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "dd" = (
@@ -3129,28 +3100,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
-"fu" = (
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
 "fv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3431,18 +3380,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
-"fS" = (
-/obj/structure/bed/chair,
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
 "fT" = (
 /obj/structure/hygiene/sink{
 	dir = 4;
@@ -3630,11 +3567,6 @@
 /obj/floor_decal/corner/blue/diagonal{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/item/storage/music_tape_holder,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
@@ -3734,18 +3666,6 @@
 	dir = 4
 	},
 /obj/item/trash/liquidfood,
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
-"gx" = (
-/obj/structure/table/standard,
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "gy" = (
@@ -3878,20 +3798,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
-"gN" = (
-/obj/structure/bed/chair{
-	dir = 1
-	},
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
 "gO" = (
 /obj/floor_decal/corner/blue/diagonal{
 	dir = 4
@@ -4014,17 +3920,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/port)
-"ha" = (
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
 "hb" = (
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
@@ -4186,19 +4081,6 @@
 /obj/item/book/manual/nt_regs,
 /obj/item/book/manual/chef_recipes,
 /obj/item/book/manual/barman_recipes,
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
-"hp" = (
-/obj/structure/table/standard,
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
-	},
-/obj/machinery/power/apc{
-	name = "south bump";
-	pixel_y = -25;
-	req_access = list("ACCESS_CAVALRY")
-	},
-/obj/structure/cable,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hq" = (
@@ -5827,23 +5709,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/maintenance/upper/waste)
-"Ik" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	name = "south bump";
-	pixel_y = -25;
-	req_access = list("ACCESS_CAVALRY")
-	},
-/obj/structure/catwalk,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/port)
 "In" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -14353,13 +14218,13 @@ dq
 eq
 Jp
 fc
-fu
-fS
+ft
+fR
 gi
-gx
-gN
-ha
-hp
+gh
+gM
+gO
+gh
 hk
 hC
 hk
@@ -15093,7 +14958,7 @@ gR
 hc
 hu
 hk
-Ik
+hC
 hk
 Ua
 ab
@@ -15925,7 +15790,7 @@ ab
 ac
 zO
 zO
-as
+ap
 az
 aK
 aK

@@ -57,6 +57,16 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	desc = "SPS Army"
 	region = ACCESS_REGION_NONE
 
+/datum/access/access_away_cavalry_fleet_armory
+	id = access_away_cavalry_fleet_armory
+	desc = "SPS Emergency Armory"
+	region = ACCESS_REGION_NONE
+
+/datum/access/access_away_cavalry_pilot
+	id = access_away_cavalry_pilot
+	desc = "SPS Pilot"
+	region = ACCESS_REGION_NONE
+
 /datum/access/access_away_cavalry_captain
 	id = access_away_cavalry_captain
 	desc = "SPS Captain"
