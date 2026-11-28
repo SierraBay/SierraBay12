@@ -251,7 +251,7 @@
 	if(H.mind.role_alt_title == "Counselor")
 		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_MASTER)
 	if(H.mind.role_alt_title == "Mentalist")
-		psi_faculties = list("[PSI_CONSCIOUSNESS]" = PSI_RANK_MASTER)
+		psi_faculties = list("[PSI_PRAXIA]" = PSI_RANK_MASTER)
 
 	return ..()
 

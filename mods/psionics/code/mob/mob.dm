@@ -16,6 +16,7 @@
 	if(!src.zone_sel)
 		to_chat(src, SPAN_NOTICE("Вы чувствуете, как что-то странное касается вашего разума... но ваш разум не способен это осознать."))
 		return
+	faculty = psi_normalize_faculty(faculty)
 	if(!psi)
 		psi = new(src)
 	var/current_rank = psi.get_rank(faculty)

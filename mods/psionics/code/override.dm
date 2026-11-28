@@ -8,10 +8,7 @@
 	*/
 
 	if(psi_latency_chance && prob(psi_latency_chance) || H.species.name == SPECIES_MULE)
-		if(H.species.name in HUMAN_SPECIES)
-			H.set_psi_rank(lowertext(pick(PSI_HUMAN_DISCIPLES)), TRUE, take_larger = TRUE, defer_update = TRUE)
-		if(H.species.name == SPECIES_TAJARA)
-			H.set_psi_rank(lowertext(pick(PSI_TAJARAN_DISCIPLES)), TRUE, take_larger = TRUE, defer_update = TRUE)
+		H.set_psi_rank(pick(GLOB.psi_faculty_ids), TRUE, take_larger = TRUE, defer_update = TRUE)
 	if(H.species.name == SPECIES_MULE)
 		H.psi.max_stamina = 100
 		H.psi.cooldown_modifier -= 0.1
@@ -25,22 +22,52 @@
 	if(!H.client || !whitelist_lookup(SPECIES_PSI, H.client.ckey))
 		return
 
-	var/list/psi_abilities_by_name = H.client.prefs.psi_abilities
+	var/datum/preferences/P = H.client.prefs
 
-	if(!H.client.prefs.psi_threat_level)
+	if(!P.psi_threat_level)
 		return
 
-	LAZYINITLIST(psi_faculties)
-	if(H.species.name in HUMAN_SPECIES)
-		create_psi_list(PSI_HUMAN_DISCIPLES, psi_abilities_by_name)
-	if(H.species.name == SPECIES_TAJARA)
-		create_psi_list(PSI_TAJARAN_DISCIPLES, psi_abilities_by_name)
+	var/list/faculty_ranks = list()
+	var/list/job_choices = list()
+	if(islist(psi_faculties))
+		for(var/job_faculty in psi_faculties)
+			var/job_rank = psi_faculties[job_faculty]
+			var/job_faculty_id = psi_normalize_faculty(job_faculty)
+			if(job_rank >= PSI_RANK_APPRENTICE)
+				job_choices[job_faculty_id] = max(job_choices[job_faculty_id], job_rank)
+			else
+				faculty_ranks[job_faculty_id] = max(faculty_ranks[job_faculty_id], job_rank)
+	var/list/chosen_powers = list()
 
-	for(var/psi in psi_faculties)
-		if(psi_faculties[psi] > 0)
-			H.set_psi_rank(psi, psi_faculties[psi], take_larger = TRUE, defer_update = TRUE)
+	for(var/i in 1 to length(GLOB.psi_faculty_names))
+		var/faculty_name = GLOB.psi_faculty_names[i]
+		var/faculty_id = GLOB.psi_faculty_ids[i]
+		var/rank = P.get_psi_faculty_rank(faculty_name)
+		if(rank <= 0)
+			continue
+		faculty_ranks[faculty_id] = max(faculty_ranks[faculty_id], rank)
+		var/list/ids = list()
+		for(var/singleton/psionic_power/power in P.get_chosen_psi_powers(faculty_name))
+			ids += power.get_id()
+		chosen_powers[faculty_id] = ids
 
-	H.psi.update()
+	for(var/psi in faculty_ranks)
+		if(faculty_ranks[psi] > 0)
+			H.set_psi_rank(psi, faculty_ranks[psi], take_larger = TRUE, defer_update = TRUE)
+
+	for(var/job_faculty_id in job_choices)
+		if(H.psi && (H.psi.get_rank(job_faculty_id) || 0) >= job_choices[job_faculty_id])
+			job_choices -= job_faculty_id
+		else if(!H.psi)
+			H.set_psi_rank(job_faculty_id, PSI_RANK_LATENT, take_larger = TRUE, defer_update = TRUE)
+
+	if(H.psi)
+		for(var/faculty_id in chosen_powers)
+			H.psi.set_selected_powers(faculty_id, chosen_powers[faculty_id])
+		H.psi.update()
+		H.psi.apply_pref_disorders(P)
+		if(length(job_choices))
+			H.psi.queue_job_awakenings(job_choices, "профессия: [title]")
 
 	give_psionic_implant_on_join ||= (H.client.prefs.psi_openness && H.client.prefs.psi_threat_level > 0)
 
@@ -63,13 +90,6 @@
 				imp.psi_mode = "Security Level Derived"
 				to_chat(H, SPAN_DANGER("Ваш имплант подавитель активен в не-чрезвычайной ситуации"))
 	to_chat(H, SPAN_DANGER("Как зарегистрированный псионик, вам выдан имплант подавления, для вашего контроля."))
-
-/datum/job/proc/create_psi_list(disciples, psi_abilities_by_name)
-	for(var/faculty_name in disciples)
-		var/singleton/psionic_faculty/faculty = SSpsi.faculties_by_name[faculty_name]
-		var/faculty_id = faculty.id
-		psi_faculties |= list("[faculty_id]" = psi_abilities_by_name[faculty_name] - 1)
-	return psi_faculties
 
 /datum/job/equip(mob/living/carbon/human/H, alt_title, datum/mil_branch/branch, datum/mil_rank/grade)
 
@@ -159,6 +179,7 @@
 	hitsound = 'sound/weapons/towelwhip.ogg'
 	var/info
 	var/use_rating
+	var/disorder
 
 
 /obj/item/card/operant_card/proc/set_info(mob/living/carbon/human/human)
@@ -166,27 +187,36 @@
 		return
 	switch(human.psi?.rating)
 		if(0)
-			use_rating = "[human.psi.rating]-Omicron"
+			use_rating = "Нет"
 		if(1)
-			use_rating = "[human.psi.rating]-Omicron"
+			use_rating = "[human.psi.rating]-Омикрон"
 		if(2)
-			use_rating = "[human.psi.rating]-Omega"
+			use_rating = "[human.psi.rating]-Омега"
 		if(3)
-			use_rating = "[human.psi.rating]-Lamed"
+			use_rating = "[human.psi.rating]-Ламед"
 		if(4)
-			use_rating = "[human.psi.rating]-Gimmel"
+			use_rating = "[human.psi.rating]-Гиммель"
 		if(5)
-			use_rating = "[human.psi.rating]-Aleph"
+			use_rating = "[human.psi.rating]-Алеф"
 		if (6 to INFINITY)
-			use_rating = "[human.psi.rating]-Post Aleph"
+			use_rating = "[human.psi.rating]-Пост Алеф"
 		else
-			use_rating = "Non-Psionic"
+			use_rating = "Нет"
+
+	disorder = ""
+	if(human.psi.disorders)
+		for(var/id in human.psi.disorders)
+			var/singleton/psi_disorder/D = get_psi_disorder(id)
+			if(!D)
+				continue
+			disorder += "<li>[D.name]</li>"
+
 
 	info = {"\
-		Name: [human.real_name]\n\
-		Species: [human.get_species()]\n\
-		Fingerprint: [human.dna?.uni_identity ? md5(human.dna.uni_identity) : "N/A"]\n\
-		Assessed Potential: [use_rating]\
+		Имя: [human.real_name]\n\
+		Отпечаток: [human.dna?.uni_identity ? md5(human.dna.uni_identity) : "Нет"]\n\
+		Рейтинг: [use_rating]\n\
+		Диагноз: <ul>[disorder ? disorder : "Нет"]</ul>\
 	"}
 
 /obj/item/card/operant_card/attack_self(mob/living/user)

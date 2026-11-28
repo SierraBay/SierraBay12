@@ -1,4 +1,4 @@
-GLOBAL_LIST_AS(psychic_ranks_to_strings, list("Latent", "Omega", "Lamed", "Gimmel", "Aleph"))
+GLOBAL_LIST_AS(psychic_ranks_to_strings, list("Латент", "Омега", "Ламед", "Гиммель", "Алеф"))
 
 PROCESSING_SUBSYSTEM_DEF(psi)
 	name = "Psychics"

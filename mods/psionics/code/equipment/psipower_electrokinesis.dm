@@ -22,7 +22,7 @@
 	. = ..()
 
 /obj/item/psychic_power/electric_whip/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob)
-	var/el_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/el_rank = user.psi.get_rank(PSI_KINESIS)
 
 	if(istype(A, /mob/living))
 		var/mob/living/target = A
@@ -40,7 +40,7 @@
 				to_chat(user, SPAN_WARNING("Вы не можете зарядить самого себя!"))
 				return
 			if(target.psi && !target.psi.suppressed)
-				var/el_rank_target = target.psi.get_rank(PSI_METAKINESIS)
+				var/el_rank_target = target.psi.get_rank(PSI_KINESIS)
 				if(el_rank_target >= el_rank && prob(50))
 					user.visible_message(SPAN_DANGER("[target] пропускает ток через себя, возвращая его [user] в виде молнии!"))
 					user.electrocute_act(rand(el_rank_target * 2, el_rank_target * 5), target, 1, target.zone_sel.selecting)
@@ -52,10 +52,10 @@
 			return TRUE
 
 /obj/item/psychic_power/electric_whip/apply_hit_effect(mob/living/target, mob/living/user, hit_zone)
-	var/el_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/el_rank = user.psi.get_rank(PSI_KINESIS)
 
 	if(target.psi && !target.psi.suppressed)
-		var/el_rank_target = target.psi.get_rank(PSI_METAKINESIS)
+		var/el_rank_target = target.psi.get_rank(PSI_KINESIS)
 		if(el_rank_target >= el_rank && prob(50))
 			user.visible_message(SPAN_DANGER("[target] пропускает ток через себя, возвращая его [user] в виде молнии!"))
 			user.electrocute_act(rand(el_rank_target * 2, el_rank_target * 5), target, 1, target.zone_sel.selecting)

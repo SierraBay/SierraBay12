@@ -147,3 +147,117 @@
 #undef PSI_IMPLANT_SHOCK
 #undef PSI_IMPLANT_WARN
 #undef PSI_IMPLANT_DISABLED
+
+/obj/item/implanter/psionic
+	name = "implanter"
+	desc = "Single time use implanter."
+	imp = null
+	icon_state = "cimplanter2"
+
+	var/psi_rank = PSI_RANK_APPRENTICE
+	var/list/psi_target_faculties = list(PSI_KINESIS)
+	var/used = FALSE
+
+/obj/item/implanter/psionic/Initialize()
+	. = ..()
+	icon_state = "cimplanter2"
+
+/obj/item/implanter/psionic/on_update_icon()
+	if (!used)
+		icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter1"
+
+/obj/item/implanter/psionic/examine(mob/user, distance)
+	. = ..()
+	if(used)
+		to_chat(user, SPAN_WARNING("It's spent."))
+		return
+
+/obj/item/implanter/psionic/proc/get_target_faculties()
+	if(length(psi_target_faculties))
+		return psi_target_faculties
+	return GLOB.psi_faculty_ids
+
+/obj/item/implanter/psionic/proc/get_faculty_names()
+	var/list/names = list()
+	for(var/faculty in get_target_faculties())
+		var/singleton/psionic_faculty/faculty_singleton = SSpsi.get_faculty(faculty)
+		names += faculty_singleton ? faculty_singleton.name : faculty
+	return english_list(names)
+
+/// Выбор уровня псионики и школ.
+/obj/item/implanter/psionic/attack_self(mob/user)
+	if(used)
+		to_chat(user, SPAN_WARNING("Имплантер уже использован."))
+		return
+
+	var/list/rank_options = list(
+		"Малый" = PSI_RANK_APPRENTICE,
+		"Обычный" = PSI_RANK_OPERANT,
+		"Передозировка" = PSI_RANK_MASTER
+	)
+	var/rank_choice = input(user, "Выберите уровень псионики.", "Пси-инфицированный имплантер") as null|anything in rank_options
+	if(!rank_choice || used || !CanPhysicallyInteract(user))
+		return
+
+	var/list/faculty_options = list(
+		"Кинезис" = list(PSI_KINESIS),
+		"Патия" = list(PSI_PATIA),
+		"Праксия" = list(PSI_PRAXIA),
+	)
+	var/faculty_choice = input(user, "Выберите направление.", "Пси-инфицированный имплантер") as null|anything in faculty_options
+	if(!faculty_choice || used || !CanPhysicallyInteract(user))
+		return
+
+	psi_rank = rank_options[rank_choice]
+	psi_target_faculties = faculty_options[faculty_choice]
+	to_chat(user, SPAN_NOTICE("Имплантер настроен: [rank_choice], [get_faculty_names()]."))
+
+/obj/item/implanter/psionic/use_after(mob/living/carbon/M, mob/living/carbon/user)
+	if(!ishuman(M))
+		return
+	if(used)
+		to_chat(user, SPAN_WARNING("Имплантер уже использован."))
+		return
+
+	var/mob/living/carbon/human/H = M
+	if(H.is_species(SPECIES_IPC) || H.is_species(SPECIES_ADHERENT))
+		to_chat(user, SPAN_WARNING("Эта форма жизни не способна воспринять псионику."))
+		return
+
+	user.visible_message(
+		SPAN_WARNING("[user] подносит имплантер к шее [H == user ? "" : H]."),
+		SPAN_NOTICE("Ты подносишь имплантер к шее [H == user ? "" : H]."))
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	if(!do_after(user, 5 SECONDS, H) || used)
+		return
+
+	if(grant_psionics(H))
+		user.visible_message(
+			SPAN_WARNING("[user] вводит содержимое имплантера [H == user ? "себе" : H]."),
+			SPAN_NOTICE("Имплантер издаёт тихий щелчок и пустеет."))
+		log_and_message_admins("использовал псионический имплантер ([GLOB.psychic_ranks_to_strings[psi_rank] || psi_rank], [get_faculty_names()]) на [key_name(H)].", user)
+		used = TRUE
+		name = "used implanter"
+		icon_state = "cimplanter1"
+
+/obj/item/implanter/psionic/proc/grant_psionics(mob/living/carbon/human/H)
+	var/list/choices = list() // faculty id -> ранг
+	for(var/faculty in get_target_faculties())
+		if((H.psi ? (H.psi.get_rank(faculty) || 0) : 0) >= psi_rank)
+			continue
+		choices[faculty] = psi_rank
+	if(!length(choices))
+		return FALSE
+
+	if(!H.psi)
+		for(var/faculty in choices)
+			H.set_psi_rank(faculty, PSI_RANK_LATENT, take_larger = TRUE, defer_update = TRUE)
+			break
+	if(!H.psi)
+		return FALSE
+
+	H.psi.update()
+	H.psi.queue_job_awakenings(choices, "имплантер пси-инфекции")
+	return TRUE

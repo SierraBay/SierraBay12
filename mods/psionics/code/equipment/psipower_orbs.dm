@@ -4,7 +4,7 @@
 /obj/machinery/vending/use_tool(obj/item/W as obj, mob/living/user as mob)
 
 	if(istype(W, /obj/item/psychic_power/psielectro))
-		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_APPRENTICE)
+		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_APPRENTICE)
 			var/option = input(user, "Do something!", "What do you want to do?") in list("Hack", "Electrify")
 			if (!option)
 				return
@@ -24,7 +24,7 @@
 /obj/machinery/smartfridge/use_tool(obj/item/O as obj, mob/living/user as mob)
 
 	if(istype(O, /obj/item/psychic_power/psielectro))
-		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_APPRENTICE)
+		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_APPRENTICE)
 			if(do_after(user, 30))
 				to_chat(user, SPAN_WARNING("Вы аккуратно меняете настройки автомата..."))
 				if(!emagged)
@@ -37,7 +37,7 @@
 /obj/machinery/atm/use_tool(obj/item/I as obj, mob/living/user as mob)
 
 	if(istype(I, /obj/item/psychic_power/psielectro))
-		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_OPERANT)
+		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_OPERANT)
 			if(do_after(user, 30))
 				to_chat(user, SPAN_WARNING("Вы прислоняете руку к терминалу, запуская в него мощный поток тока!"))
 				if(!emagged)
@@ -51,7 +51,7 @@
 //По всем законам логики оно не должно работать, но если ставить тут == вместо != - оно волшебным образом ломается
 	var/obj/item/psychic_power/psielectro/carried_orb
 	if(carried_orb != src.get_active_hand())
-		if(src.psi && src.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_MASTER)
+		if(src.psi && src.psi.get_rank(PSI_KINESIS) >= PSI_RANK_MASTER)
 			if(prob(80))
 				src.visible_message(SPAN_WARNING("[src] absorbed all pure energy, sent into them!"))
 				src.psi.stamina = min(src.psi.max_stamina, src.psi.stamina + rand(15,20))
@@ -67,7 +67,7 @@
 /obj/machinery/psi_monitor/use_tool(obj/item/O as obj, mob/living/user as mob)
 
 	if(istype(O, /obj/item/psychic_power/psielectro))
-		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_OPERANT)
+		if(istype(user) && user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_OPERANT)
 			if(do_after(user, 30))
 				to_chat(user, SPAN_WARNING("Вы прислоняете руку к монитору, пропуская мощный поток тока, ломающий все электронные замки!"))
 				if(!emagged)
@@ -97,7 +97,7 @@
 	var/cooldown = 0
 
 /obj/item/psychic_power/psielectro/attack_self(mob/living/user as mob)
-	var/el_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/el_rank = user.psi.get_rank(PSI_KINESIS)
 	if(el_rank >= PSI_RANK_MASTER)
 		user.put_in_hands(new /obj/item/psychic_power/electric_whip(user))
 		qdel(src)
@@ -110,16 +110,16 @@
 
 /obj/item/psychic_power/psielectro/New(mob/living/user)
 	user = usr
-	var/el_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/el_rank = user.psi.get_rank(PSI_KINESIS)
 	maintain_cost -= el_rank
 
 	..()
 
 /obj/item/psychic_power/psielectro/apply_hit_effect(mob/living/target, mob/living/user, hit_zone)
-	var/el_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/el_rank = user.psi.get_rank(PSI_KINESIS)
 
 	if(target.psi && !target.psi.suppressed)
-		var/el_rank_target = target.psi.get_rank(PSI_METAKINESIS)
+		var/el_rank_target = target.psi.get_rank(PSI_KINESIS)
 		if(el_rank_target >= el_rank && prob(50))
 			user.visible_message(SPAN_DANGER("[target] пропускает ток через себя, возвращая его [user] в виде молнии!"))
 			user.electrocute_act(rand(el_rank_target * 2, el_rank_target * 5), target, 1, target.zone_sel.selecting)
@@ -141,7 +141,7 @@
 	if(!proximity)
 		return
 
-	var/el_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/el_rank = user.psi.get_rank(PSI_KINESIS)
 
 //MOBS
 
@@ -154,12 +154,12 @@
 		if(target == user)
 			to_chat(user, SPAN_WARNING("Вы не можете зарядить самого себя!"))
 			return
-		if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) <= PSI_RANK_OPERANT)
+		if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) <= PSI_RANK_OPERANT)
 			user.visible_message(SPAN_DANGER("[user] направляет свору еле-заметных молний в тело [target]!"))
-		if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_MASTER)
+		if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_MASTER)
 			user.visible_message(SPAN_DANGER("[user] поражает [target] мощным электрическим шквалом!"))
 		if(target.psi && !target.psi.suppressed)
-			var/el_rank_target = target.psi.get_rank(PSI_METAKINESIS)
+			var/el_rank_target = target.psi.get_rank(PSI_KINESIS)
 			if(el_rank_target >= el_rank && prob(50))
 				user.visible_message(SPAN_DANGER("[target] пропускает ток через себя, возвращая его [user] в виде молнии!"))
 				user.electrocute_act(rand(el_rank_target * 2,el_rank_target * 5), target, 1, target.zone_sel.selecting)
@@ -183,7 +183,7 @@
 
 		var/obj/machinery/light/lighting = A
 		if(lighting.on)
-			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_OPERANT)
+			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_OPERANT)
 				if(do_after(user, 30))
 					if(proximity)
 						user.visible_message(SPAN_DANGER("[user] прислоняет руку к источнику света, и уже через пару секунд он угасает!"))
@@ -233,7 +233,7 @@
 		if(option == "Открыть/Закрыть")
 			to_chat(SPAN_NOTICE("Шлюз становится продолжением тебя, ты посылаешь сигналы, в попытке открыть шлюз"))
 			if(do_after(user, 5 SECONDS, D, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
-				if(user.psi.get_rank(PSI_METAKINESIS) <= PSI_RANK_OPERANT)
+				if(user.psi.get_rank(PSI_KINESIS) <= PSI_RANK_OPERANT)
 					if(prob(30))
 						to_chat(SPAN_WARNING("Механизм [D.name] сопротивляется"))
 						return
@@ -262,7 +262,7 @@
 				playsound(D.loc, "sparks", 50, 1)
 
 		if(option == "Заболтировать/Разболтировать")
-			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_MASTER || !user.skill_check(SKILL_ELECTRICAL, SKILL_EXPERIENCED))
+			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_MASTER || !user.skill_check(SKILL_ELECTRICAL, SKILL_EXPERIENCED))
 				to_chat(SPAN_NOTICE("Ты тянешь болты как собственные сухожилия, стараясь изменить их положение"))
 				if(do_after(user, 5 SECONDS, D, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
 					D.toggle_lock()
@@ -270,7 +270,7 @@
 					new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "electricity_constant")
 					playsound(D.loc, "sparks", 50, 1)
 			else
-				user.visible_message(SPAN_NOTICE("[user] прислоняет обе руки к [D.name], тебе нехватило [SPAN_INFO("знаний")] в этом."))
+				user.visible_message(SPAN_NOTICE("[user] прислоняет обе руки к [D.name]"), SPAN_NOTICE("Касаясь шлюза, ты понимаешь что тебе не хватает [SPAN_INFO("знаний")] в электрике."))
 				to_chat(SPAN_WARNING("Вы прислоняете свои руки к [D.name], пытаясь пропустить поток через его внутренние механизмы, но ничего не получается!"))
 				return
 
@@ -289,7 +289,7 @@
 //По всем законам логики оно не должно работать, но если ставить тут == вместо != - оно волшебным образом ломается
 	var/obj/item/psychic_power/psifire/carried_orb
 	if(carried_orb != src.get_active_hand())
-		if(src.psi && src.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_OPERANT)
+		if(src.psi && src.psi.get_rank(PSI_KINESIS) >= PSI_RANK_OPERANT)
 			return
 	..()
 
@@ -322,13 +322,13 @@
 
 /obj/item/psychic_power/psifire/New(mob/living/user)
 	user = usr
-	var/fire_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/fire_rank = user.psi.get_rank(PSI_KINESIS)
 
 	maintain_cost -= fire_rank
 	flame_power += fire_rank
 	range += fire_rank
 
-	if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_MASTER)
+	if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_MASTER)
 		flame_color = "#33ccc9"
 		flame_power += 5
 
@@ -354,7 +354,7 @@
 			qdel(src)
 
 /obj/item/psychic_power/psifire/attack_self(mob/living/user as mob)
-	var/pyro_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/pyro_rank = user.psi.get_rank(PSI_KINESIS)
 	if(combat_mode)
 		var/list/options = list(
 			"FIRE WALL" = image('mods/psionics/icons/psi.dmi', "FIRE PUNCH"),
@@ -436,7 +436,7 @@
 	if(istype(A, /obj/turf_fire))
 		var/obj/turf_fire/fire = A
 		if(fire.fire_power >= 20)
-			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_OPERANT)
+			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_KINESIS) >= PSI_RANK_OPERANT)
 				if(do_after(user, 30))
 					user.visible_message(SPAN_DANGER("[user] протягивает руку к [fire], постепенно поглащая его!"))
 					to_chat(user, SPAN_WARNING("Вы подводите руку к [fire], вытягивая всю энергии, что в нём скопилась. Огонь приятно обвивает вашу руку."))
@@ -583,7 +583,7 @@
 
 /obj/item/psychic_power/psiice/New(mob/living/user)
 	user = usr
-	var/cryo_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/cryo_rank = user.psi.get_rank(PSI_KINESIS)
 
 	maintain_cost -= cryo_rank
 	range += cryo_rank
@@ -597,7 +597,7 @@
 	. = ..()
 
 /obj/item/psychic_power/psiice/attack_self(mob/living/user as mob)
-	var/cryo_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/cryo_rank = user.psi.get_rank(PSI_KINESIS)
 	if(combat_mode)
 		var/list/options = list(
 			"ICE WALL" = mutable_appearance('mods/psionics/icons/psi.dmi', "WALL"),
@@ -653,7 +653,7 @@
 			to_chat(user, SPAN_WARNING("Вы вновь можете безопасно прикасаться к вещам вокруг."))
 
 /obj/item/psychic_power/psiice/apply_hit_effect(mob/living/target, mob/living/user, hit_zone)
-	var/cryo_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/cryo_rank = user.psi.get_rank(PSI_KINESIS)
 
 	if(target.do_psionics_check(maintain_cost, user))
 		to_chat(user, SPAN_WARNING("Your power skates across \the [target.name], but cannot get a grip..."))
@@ -685,7 +685,7 @@
 	..()
 
 /obj/item/psychic_power/psiice/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob, proximity)
-	var/cryo_rank = user.psi.get_rank(PSI_METAKINESIS)
+	var/cryo_rank = user.psi.get_rank(PSI_KINESIS)
 
 	if(cooldown > 0)
 		to_chat(user, SPAN_WARNING("Ты не можешь делать это так часто!"))

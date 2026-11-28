@@ -44,9 +44,6 @@
 					owner.client.screen |= ui.components
 					owner.client.screen |= ui*/
 //FD PSIONICS//
-			if(get_rank(PSI_PSYCHOKINESIS) >= PSI_RANK_MASTER)
-				var/obj/screen/psi/levitate/levitate = new(owner)
-				ui.components.Insert(3, levitate)
 			for(var/faculty in ranks)
 				var/existing_button = FALSE
 				for(var/obj/screen/psi/toggle_faculty/button in ui.components)
@@ -79,32 +76,25 @@
 			else
 				aura_image.blend_mode = BLEND_ADD
 				switch(highest_faculty)
-					if(PSI_COERCION)
-						aura_color = "#3333cc"
-					if(PSI_PSYCHOKINESIS)
+					if(PSI_KINESIS)
 						aura_color = "#cc3333"
-					if(PSI_REDACTION)
+					if(PSI_PATIA)
+						aura_color = "#3333cc"
+					if(PSI_PRAXIA)
 						aura_color = "#33cc33"
-					if(PSI_ENERGISTICS)
-						aura_color = "#cc8221"
-					if(PSI_CONSCIOUSNESS)
-						aura_color = "#5233cc"
-					if(PSI_METAKINESIS)
-						aura_color = "#cccc33"
-					if(PSI_MANIFESTATION)
-						aura_color = "#cc8221"
 			aura_image.pixel_x = -owner.default_pixel_x
 			aura_image.pixel_y = -owner.default_pixel_y
 
 	if(!announced && owner && owner.client && !QDELETED(src))
 		announced = TRUE
 		to_chat(owner, "<hr>")
-		to_chat(owner, SPAN_NOTICE(FONT_LARGE("You are <b>psionic</b>, touched by powers beyond understanding.")))
-		to_chat(owner, SPAN_NOTICE("<b>Shift-left-click your Psi icon</b> on the bottom right to <b>view a summary of how to use them</b>, or <b>left click</b> it to <b>suppress or unsuppress</b> your psionics. Beware: overusing your gifts can have <b>deadly consequences</b>."))
+		to_chat(owner, SPAN_NOTICE(FONT_LARGE("Ты <b>псионик</b>, затронутый силой вне твоего понимания.")))
+		to_chat(owner, SPAN_NOTICE("<b>Шифт-клик по Пси меню</b> на правой части экрана <b>чтобы посмотреть подробности</b>, или <b>левый клик</b> чтобы <b>подавлять или расслаблять</b> свои силы. Внимание: злоупотребление приведет к [SPAN_DANGER("ответственности")]."))
 		to_chat(owner, "<hr>")
 
 /datum/psi_complexus/Process()
 	var/update_hud
+	process_disorders()
 	if(armor_cost)
 		var/value = max(1, ceil(armor_cost * cost_modifier))
 		if(value <= stamina)
@@ -122,7 +112,7 @@
 				suppressed = TRUE
 				update_hud = TRUE
 		else
-			to_chat(owner, SPAN_NOTICE("You have recovered your mental composure."))
+			to_chat(owner, SPAN_NOTICE("Ты восстановил ясность своих мыслей."))
 			update_hud = TRUE
 	else
 		var/psi_leech = owner.do_psionics_check()
@@ -138,8 +128,8 @@
 			else if(owner.stat == UNCONSCIOUS)
 				stamina = min(max_stamina, stamina + rand(3,5))
 
-		if(!owner.nervous_system_failure() && stamina && !suppressed && get_rank(PSI_REDACTION) >= PSI_RANK_APPRENTICE)
-			if(get_rank(PSI_REDACTION) >= PSI_RANK_GRANDMASTER)
+		if(!owner.nervous_system_failure() && stamina && !suppressed && get_rank(PSI_KINESIS) >= PSI_RANK_APPRENTICE && has_power(/singleton/psionic_power/kinesis/redaction/meditate))
+			if(get_rank(PSI_KINESIS) >= PSI_RANK_MASTER)
 				attempt_regeneration()
 
 	var/next_aura_alpha = suppressed ? 0 : clamp(round((rating/5)*255), 0, 255)
@@ -209,7 +199,7 @@
 	var/heal_rate =     0
 	var/mend_prob =     0
 
-	var/use_rank = get_rank(PSI_REDACTION)
+	var/use_rank = get_rank(PSI_KINESIS)
 	switch(use_rank)
 		if(PSI_RANK_GRANDMASTER)
 			heal_general = TRUE

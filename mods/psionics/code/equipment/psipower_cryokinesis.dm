@@ -54,7 +54,7 @@
 */
 /obj/item/cryokinesis/fists/apply_hit_effect(mob/living/target, mob/living/user, hit_zone)
 	if(user.psi)
-		var/tele_rank = user.psi.get_rank(PSI_PSYCHOKINESIS)
+		var/tele_rank = user.psi.get_rank(PSI_KINESIS)
 		if(tele_rank >= PSI_RANK_OPERANT && !user.psi.suppressed)
 			force = 35
 	..()
