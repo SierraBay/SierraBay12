@@ -22,9 +22,8 @@
 
 /datum/shuttle/autodock/overmap/graysontug
 	name = "GM Tug"
-	dock_target = "graysontugrear_shuttle"
+	dock_target = "graysontug_shuttle"
 	current_location = "nav_graysontug_start"
-	logging_home_tag = "nav_graysontug_start"
 	range = 1
 	shuttle_area = /area/map_template/crashed_shuttle/graysontug
 	fuel_consumption = 4
@@ -51,9 +50,4 @@
 	landmark_tag = "nav_graysontug_start"
 	base_area = /area/map_template/crashed_shuttle/crash
 	base_turf = /turf/simulated/floor/exoplanet/barren
-
-/obj/shuttle_landmark/graysontug/start/Initialize()
-	. = ..()
-	var/obj/overmap/visitable/sector = map_sectors["[z]"]
-	if(sector)
-		sector.add_landmark(src, "GM Tug")
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE

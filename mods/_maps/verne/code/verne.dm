@@ -253,6 +253,7 @@ var/global/const/access_verne = "ACCESS_VERNE"
 	color = COLOR_BOTTLE_GREEN
 
 /obj/machinery/stasis_cage/verne
+	base_type = /obj/machinery/stasis_cage
 	req_access = list(access_verne)
 
 /obj/machinery/stasis_cage/verne/goose/Initialize()
@@ -260,6 +261,7 @@ var/global/const/access_verne = "ACCESS_VERNE"
 	set_contained(new /mob/living/simple_animal/hostile/retaliate/goose/doctor)
 
 /obj/machinery/anomaly_container/verne
+	base_type = /obj/machinery/anomaly_container
 	req_access = list(access_verne)
 
 /obj/item/paper/verne
