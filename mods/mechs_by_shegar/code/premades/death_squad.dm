@@ -2,6 +2,7 @@
 /mob/living/exosuit/premade/death_combat
 	name = "Gygax"
 	desc = "This mech is the successor to the first combat mechs - the Gygax. This army model has all the latest innovations in the field of military robotics and is a natural nightmare for its enemies."
+	external_armor_type = /obj/item/mech_external_armor/admin
 
 /obj/item/mech_component/manipulators/combat/death_combat //Лапы
 	max_hp = 300
@@ -20,20 +21,6 @@
 
 /obj/item/mech_component/chassis/combat/death_combat //Пузо
 	max_hp = 500
-
-/obj/item/robot_parts/robot_component/armour/exosuit/combat/tactical
-	name = "tactical combat plating"
-	desc = "Special combat plating, designed for operating in field of battle."
-	armor = list(
-		melee = ARMOR_MELEE_VERY_HIGH,
-		bullet = ARMOR_BALLISTIC_RIFLE,
-		laser = ARMOR_LASER_RIFLES,
-		energy = ARMOR_ENERGY_STRONG,
-		bomb = ARMOR_BOMB_RESISTANT,
-		rad = ARMOR_RAD_RESISTANT,
-		bio = ARMOR_BIO_SHIELDED
-		)
-	origin_tech = list(TECH_MATERIAL = 7)
 
 /mob/living/exosuit/premade/death_combat/Initialize()
 	if(!head)
@@ -64,9 +51,7 @@
 /obj/item/mech_component/chassis/combat/death_combat/prebuild()
 	. = ..()
 	QDEL_NULL(cell)
-	QDEL_NULL(m_armour)
 	cell = new /obj/item/cell/infinite(src)
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat/tactical(src)
 
 /mob/living/exosuit/premade/death_combat/spawn_mech_equipment()
 	..()
@@ -85,6 +70,7 @@
 /mob/living/exosuit/premade/death_heavy
 	name = "Durand"
 	desc = "This Mech is the tank of a modern army, equipped to withstand the most colossal damage and the most powerful attacks in modern warfare. This Mech will be EXTREMELY difficult to destroy without anti-tank weapons."
+	external_armor_type = /obj/item/mech_external_armor/admin
 
 /obj/item/mech_component/manipulators/heavy/death_heavy //Лапы
 	max_hp = 1000
@@ -142,9 +128,7 @@
 /obj/item/mech_component/chassis/heavy/death_heavy/prebuild()
 	. = ..()
 	QDEL_NULL(cell)
-	QDEL_NULL(m_armour)
 	cell = new /obj/item/cell/infinite(src)
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat/tactical(src)
 
 /mob/living/exosuit/premade/death_heavy/spawn_mech_equipment()
 	..()
@@ -157,6 +141,7 @@
 /mob/living/exosuit/premade/death_light
 	name = "Phason"
 	desc = "SOSI"
+	external_armor_type = /obj/item/mech_external_armor/admin
 
 /obj/item/mech_component/manipulators/light/death_light //Лапы
 	max_hp = 160
@@ -210,9 +195,7 @@
 /obj/item/mech_component/chassis/light/death_light/prebuild()
 	. = ..()
 	QDEL_NULL(cell)
-	QDEL_NULL(m_armour)
 	cell = new /obj/item/cell/infinite(src)
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat/tactical(src)
 
 /mob/living/exosuit/premade/death_light/spawn_mech_equipment()
 	..()

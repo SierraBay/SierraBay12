@@ -47,6 +47,11 @@
 		return
 	if(!canface() || lying)
 		return
+#ifdef MODPACK_COMBAT_EXTENDED
+	// Nobody turns while looking through a scope or binoculars (COMBAT_EXTENDED, mods/combat_extended/code/scopes.dm).
+	if(ce_scope_item)
+		return
+#endif
 	if(buckled)
 		if(facing_dir || face_dir_click)
 			facing_dir = null

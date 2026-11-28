@@ -8,9 +8,9 @@
 	min_damage = 25
 	power_use = 15
 	min_damage = 25
-	max_repair = 30
+	max_repair = 15
 	melee_damage = 30
-	repair_damage = 5
+	repair_damage = 10
 	front_modificator_damage = 1
 	matter = list(MATERIAL_STEEL = 10000)
 

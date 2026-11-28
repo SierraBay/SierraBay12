@@ -39,7 +39,8 @@
 // hit base
 /obj/item/projectile/bullet/rpg_rocket/on_hit(atom/target, blocked, def_zone)
 	. = ..()
-	if(get_dist(starting, target.loc) < 3 || starting.loc == target.loc) // check detonating distance
+	// Arming distance to the hit tile: a wall's or floor's loc is its area, not a tile.
+	if(get_dist(starting, get_turf(target)) < 3)
 		return FALSE
 	else
 		var/turf/T = get_turf(src)

@@ -18,6 +18,7 @@
 		/obj/item/storage/belt/holster/machete,
 		/obj/item/shuttle_beacon,
 		/obj/item/clothing/accessory/storage/webbing_large,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/device/taperecorder,
 		/obj/item/device/scanner/gas,
 		/obj/item/device/flash,

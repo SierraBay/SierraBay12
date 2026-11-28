@@ -63,7 +63,10 @@
 
 /obj/item/clothing/examine(mob/user)
 	. = ..()
-	for(var/obj/item/clothing/accessory/A in accessories)
+	// [SIERRA-EDIT] - COMBAT_EXTENDED - (Аксессуары под верхней одеждой посторонним не видны: /mods/combat_extended/code/concealed_accessories.dm)
+	// for(var/obj/item/clothing/accessory/A in accessories) // SIERRA-EDIT - ORIGINAL
+	for(var/obj/item/clothing/accessory/A in ce_get_accessories_seen_by(user))
+	// [/SIERRA-EDIT]
 		if (!(A.accessory_flags & ACCESSORY_HIDDEN))
 			to_chat(user, "[icon2html(A, user)] \A [A] is attached to it.[istype(A, /obj/item/clothing/accessory/wristwatch) ? "  <a href='byond://?src=\ref[A];check_watch=1'>\[Check Watch\]</a>" : ""]")
 	switch(ironed_state)

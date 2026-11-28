@@ -414,7 +414,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
 /obj/item/ammo_magazine/n10mm
-	name = "NT41 magazine (5.7x28mm)"
+	name = "NT41 magazine"
 	icon = 'packs/infinity/icons/obj/ammo.dmi'
 	icon_state = "10mm"
 	mag_type = MAGAZINE

@@ -8,11 +8,11 @@
 	has_hardpoints = list(HARDPOINT_BACK)
 	matter = list(MATERIAL_STEEL = 210000, MATERIAL_URANIUM = 10000, MATERIAL_PLASTEEL = 40000, MATERIAL_ALUMINIUM = 40000)
 
-	max_hp = 500
+	max_hp = 150
 	mech_health = 500
-	max_repair = 150
-	min_damage = 300
-	repair_damage = 30
+	max_repair = 40
+	min_damage = 100
+	repair_damage = 10
 	hide_pilot = TRUE
 	req_material = MATERIAL_PLASTEEL
 	back_modificator_damage = 3
@@ -51,7 +51,3 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
-
-/obj/item/mech_component/chassis/heavy/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat(src)

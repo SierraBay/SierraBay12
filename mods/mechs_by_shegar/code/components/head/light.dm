@@ -8,9 +8,9 @@
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	prebuilt_software = list(/obj/item/circuitboard/exosystem/medical, /obj/item/circuitboard/exosystem/utility)
 	power_use = 50
-	max_hp = 80
-	min_damage = 50
-	max_repair = 20
+	max_hp = 75
+	min_damage = 30
+	max_repair = 50
 	repair_damage = 15
 	req_material = MATERIAL_ALUMINIUM
 	front_modificator_damage = 1

@@ -4,9 +4,9 @@
 	icon_state = "combat_arm"
 	action_delay = 15
 	power_use = 25
-	max_hp = 90
-	min_damage = 50
-	max_repair = 30
+	max_hp = 150
+	min_damage = 100
+	max_repair = 60
 	melee_damage = 30
 	repair_damage = 10
 	front_modificator_damage = 1

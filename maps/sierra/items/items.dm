@@ -500,7 +500,7 @@ Passports
 		set_light(1.5, 2, "#75acff")
 	else
 		set_light(0)
-	loc.update_icon()
+	loc?.update_icon()
 
 #undef REMOTE_OPEN
 #undef REMOTE_BOLT

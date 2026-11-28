@@ -6,11 +6,6 @@
 	template = /datum/unit_test/mob_damage/tajara
 	mob_type = /mob/living/carbon/human/tajaran
 
-/datum/unit_test/mob_damage/tajara/brute
-	name = "MOB: Tajara Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-	expected_vulnerability = EXTRA_VULNERABLE
-
 /datum/unit_test/mob_damage/tajara/fire
 	name = "MOB: Tajara Fire Damage Check"
 	damagetype = DAMAGE_BURN

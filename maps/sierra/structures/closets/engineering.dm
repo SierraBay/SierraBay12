@@ -22,6 +22,7 @@
 		/obj/item/device/flash,
 		/obj/item/material/twohanded/jack/titanium,
 		/obj/item/clothing/suit/armor/pcarrier/light,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/taperoll/engineering,
 		/obj/item/device/megaphone,
 		/obj/item/device/remote_device/chief_engineer,

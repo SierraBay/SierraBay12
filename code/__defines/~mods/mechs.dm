@@ -36,6 +36,12 @@ GLOBAL_LIST_AS(mech_weapon_overlays, icon_states('mods/mechs_by_shegar/icons/mec
 #define MECH_COMPONENT_DAMAGE_DAMAGED_BAD 3
 #define MECH_COMPONENT_DAMAGE_DAMAGED_TOTAL 4
 
+//Ступени состояния внешнего бронеэлемента части: о переходе на ступень хуже диагностика сообщает пилотам
+#define MECH_EXTERNAL_ARMOUR_NONE 0
+#define MECH_EXTERNAL_ARMOUR_INTACT 1
+#define MECH_EXTERNAL_ARMOUR_WORN 2
+#define MECH_EXTERNAL_ARMOUR_FAILING 3
+
 //Construction
 #define FRAME_REINFORCED 1
 #define FRAME_REINFORCED_SECURE 2

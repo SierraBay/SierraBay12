@@ -115,6 +115,12 @@
 			to_chat(user, SPAN_NOTICE("You remove \the [system] from \the [src]'s [system_hardpoint]."))
 			playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 
+	detach_system(system, hardpoint)
+	return TRUE
+
+///Снимает модуль со слота сразу, без задержки, и кладёт его под мех. Не спит: так модули забирают и обломки меха из `Initialize()`
+/mob/living/exosuit/proc/detach_system(obj/item/mech_equipment/system, hardpoint)
+	SHOULD_NOT_SLEEP(TRUE)
 	hardpoints[hardpoint] = null
 
 	if(hardpoint == selected_hardpoint)

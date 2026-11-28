@@ -10,29 +10,47 @@
 	health_min_damage = 20
 	var/prepared
 
-/obj/structure/mech_wreckage/New(newloc, mob/living/exosuit/exosuit, gibbed)
-	if(exosuit)
-		name = "wreckage of \the [exosuit.name]"
-		if(!gibbed)
-			for(var/obj/item/thing in list(exosuit.head, exosuit.body, exosuit.L_arm, exosuit.R_arm, exosuit.L_leg, exosuit.R_leg))
-				if(thing && prob(40))
-					thing.forceMove(src)
-			for(var/hardpoint in exosuit.hardpoints)
-				if(exosuit.hardpoints[hardpoint])
-					if(prob(40))
-						var/obj/item/thing = exosuit.hardpoints[hardpoint]
-						if(exosuit.remove_system(hardpoint))
-							thing.forceMove(src)
-					else
-						//This has been destroyed, some modules may need to perform bespoke logic
-						var/obj/item/mech_equipment/E = exosuit.hardpoints[hardpoint]
-						if(istype(E))
-							E.wreck()
+/obj/structure/mech_wreckage/Initialize(mapload, mob/living/exosuit/exosuit, gibbed)
+	. = ..()
+	if(exosuit && !QDELETED(exosuit))
+		salvage(exosuit, gibbed)
 
-	..()
+///Забирает из погибшего меха то, что уцелело: каждую часть и каждый модуль с шансом 40%. Остальные модули ломаются
+/obj/structure/mech_wreckage/proc/salvage(mob/living/exosuit/exosuit, gibbed)
+	name = "wreckage of \the [exosuit.name]"
+	if(gibbed)
+		return
+	for(var/obj/item/mech_component/part in exosuit.get_salvageable_parts())
+		if(prob(40))
+			take_part(part)
+	for(var/hardpoint in exosuit.hardpoints)
+		if(exosuit.hardpoints[hardpoint])
+			if(prob(40))
+				var/obj/item/mech_equipment/thing = exosuit.hardpoints[hardpoint]
+				exosuit.detach_system(thing, hardpoint)
+				thing.forceMove(src)
+			else
+				//This has been destroyed, some modules may need to perform bespoke logic
+				var/obj/item/mech_equipment/E = exosuit.hardpoints[hardpoint]
+				if(istype(E))
+					E.wreck()
 
-/obj/structure/mech_wreckage/powerloader/New(newloc)
-	..(newloc, new /mob/living/exosuit/premade/powerloader(newloc), FALSE)
+///Забирает часть меха в обломки. Сдвоенные ноги приходят своим держателем, и обе ноги ложатся в него, как у снятых с каркаса
+/obj/structure/mech_wreckage/proc/take_part(obj/item/mech_component/part)
+	var/obj/item/mech_component/doubled_legs/holder = part
+	if(istype(holder))
+		holder.R_stored_leg.forceMove(holder)
+		holder.L_stored_leg.forceMove(holder)
+	part.forceMove(src)
+
+///Обломки погрузчика на картах: собирают погрузчик, забирают из него уцелевшее, как при гибели меха (`death()`), и удаляют его.
+///Собирать его надо в `Initialize()`: в `New()` при загрузке карты у погрузчика ещё нет частей, он строит их в своём
+///`Initialize()`, и обломки выходили пустыми, а рядом оставался целый погрузчик
+/obj/structure/mech_wreckage/powerloader/Initialize(mapload)
+	var/mob/living/exosuit/premade/powerloader/loader = new(loc)
+	. = ..(mapload, loader, FALSE)
+	loader.release_salvaged_parts()
+	qdel(loader)
 
 /obj/structure/mech_wreckage/attack_hand(mob/user)
 	if(length(contents))
