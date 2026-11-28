@@ -17,7 +17,8 @@
 	scan_data = medical_scan_action(A, user, src, mode)
 	playsound(src, 'sound/effects/fastbeep.ogg', 20)
 
-/proc/medical_scan_action(atom/target, mob/living/user, obj/scanner, verbose)
+// [SIERRA-EDIT] - TGUI - show_in_chat allows the caller to display the results by itself (health analyzer TGUI)
+/proc/medical_scan_action(atom/target, mob/living/user, obj/scanner, verbose, show_in_chat = TRUE)
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, SPAN_WARNING("You are not nimble enough to use this device."))
 		return
@@ -56,9 +57,11 @@
 		return
 
 	. = medical_scan_results(scan_subject, verbose, user.get_skill_value(SKILL_MEDICAL))
-	to_chat(user, "<hr>")
-	to_chat(user, .)
-	to_chat(user, "<hr>")
+	if(show_in_chat)
+		to_chat(user, "<hr>")
+		to_chat(user, .)
+		to_chat(user, "<hr>")
+// [/SIERRA-EDIT]
 
 /proc/medical_scan_results(mob/living/carbon/human/H, verbose, skill_level = SKILL_DEFAULT)
 	. = list()

@@ -64,6 +64,7 @@
 #include "../_master_files/code/modules/client/preference_setup/general/04_flavor.dm"
 #include "../_master_files/code/modules/client/preference_setup/loadout/gear_tweaks.dm"
 #include "../_master_files/code/game/objects/items/devices/paicard.dm"
+#include "../_master_files/code/game/objects/items/devices/scanners/health.dm"
 #include "../_master_files/code/modules/paperwork/paper.dm"
 #include "../_master_files/code/modules/admin/permissionverbs/permissionedit.dm"
 #include "../_master_files/code/datums/components/_component.dm"
